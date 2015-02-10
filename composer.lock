@@ -595,7 +595,7 @@
             "source": {
                 "type": "git",
                 "url": "/home/jaroslav/Dropbox/Projects/granam/strict-string",
-                "reference": "270025975a453289c608e150f0fd552234ef5e86"
+                "reference": "c0763269527191ba1b2bbe3ce5e16e9d2aae06ef"
             },
             "require": {
                 "granam/exception-hierarchy": "dev-master",
@@ -630,7 +630,7 @@
                 "strict",
                 "string"
             ],
-            "time": "2015-02-09 07:39:37"
+            "time": "2015-02-10 07:59:38"
         },
         {
             "name": "jaroslavtyc/doctrineum",
