@@ -1,0 +1,43 @@
+{
+    "name": "jaroslavtyc/doctrineum-strict-string",
+    "type": "library",
+    "description": "Enumeration type for Doctrine - strings only",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": { "Doctrineum\\": "Doctrineum/" }
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "/home/jaroslav/Dropbox/Projects/granam/strict-object"
+        },
+        {
+            "type": "vcs",
+            "url": "/home/jaroslav/Dropbox/Projects/doctrineum"
+        },
+        {
+            "type": "vcs",
+            "url": "/home/jaroslav/Dropbox/Projects/granam/strict-string"
+        },
+        {
+            "type": "vcs",
+            "url": "/home/jaroslav/Dropbox/Projects/granam/strict-scalar"
+        },
+        {
+            "type": "vcs",
+            "url": "/home/jaroslav/Dropbox/Projects/granam/exception-hierarchy"
+        }
+    ],
+    "require": {
+        "php": ">=5.5",
+        "jaroslavtyc/doctrineum": "dev-master",
+        "granam/strict-object": "dev-master",
+        "granam/strict-string": "dev-master",
+        "granam/strict-scalar": "dev-master",
+        "granam/exception-hierarchy": "dev-master"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~4.4",
+        "mockery/mockery": "0.9.*"
+    }
+}
