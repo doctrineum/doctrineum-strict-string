@@ -1,7 +1,7 @@
 <?php
 namespace Doctrineum\StrictString\Exceptions;
 
-interface Logic extends Exception
+interface Logic extends \Doctrineum\Exceptions\Logic, Exception
 {
 
 }

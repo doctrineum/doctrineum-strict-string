@@ -11,12 +11,20 @@ class LogicTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertTrue(interface_exists(Logic::class));
     }
+    /**
+     * @test
+     * @expectedException \Doctrineum\Exceptions\Logic
+     */
+    public function extends_doctrineum_logic_interface()
+    {
+        throw new TestLogicInterface();
+    }
 
     /**
      * @test
      * @expectedException \Doctrineum\StrictString\Exceptions\Exception
      */
-    public function extends_base_mark_interface()
+    public function extends_local_mark_interface()
     {
         throw new TestLogicInterface();
     }
