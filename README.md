@@ -4,7 +4,7 @@
 ### Example
 ```php
 $strictStringEnum = StrictStringEnum::get('foo');
-(string)$strictStringEnum === $strictStringEnum->getValue() === 'foo; // true
+(string)$strictStringEnum === $strictStringEnum->getValue() === 'foo'; // true
 
 // throws an exception - only string is allowed
 $strictStringEnum = StrictStringEnum::get(12345);
