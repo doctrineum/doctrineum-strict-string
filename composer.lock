@@ -480,7 +480,7 @@
             "source": {
                 "type": "git",
                 "url": "/home/jaroslav/Dropbox/Projects/granam/exception-hierarchy",
-                "reference": "7b068dd42ad4ea8a80e7ce9db69b816fd45ef4b5"
+                "reference": "4c7a0f66956c39bdfb6a3a96cfab77278dfd3e96"
             },
             "require": {
                 "php": ">=5.3"
@@ -506,7 +506,7 @@
                 "php",
                 "runtime"
             ],
-            "time": "2015-02-07 14:35:46"
+            "time": "2015-02-11 07:19:54"
         },
         {
             "name": "granam/strict-object",
@@ -553,7 +553,7 @@
             "source": {
                 "type": "git",
                 "url": "/home/jaroslav/Dropbox/Projects/granam/strict-scalar",
-                "reference": "91a8c7a576b047e55830ea2ced21c239f3ce58dc"
+                "reference": "80e0110246b16ee644c2b5b2583fda82974be3e1"
             },
             "require": {
                 "granam/exception-hierarchy": "dev-master",
@@ -587,7 +587,7 @@
                 "scalar",
                 "strict"
             ],
-            "time": "2015-02-07 14:42:14"
+            "time": "2015-02-11 12:32:00"
         },
         {
             "name": "granam/strict-string",
@@ -595,7 +595,7 @@
             "source": {
                 "type": "git",
                 "url": "/home/jaroslav/Dropbox/Projects/granam/strict-string",
-                "reference": "c0763269527191ba1b2bbe3ce5e16e9d2aae06ef"
+                "reference": "9abfb6e73b095ec110e452ddda39d7e8048c6044"
             },
             "require": {
                 "granam/exception-hierarchy": "dev-master",
@@ -630,7 +630,7 @@
                 "strict",
                 "string"
             ],
-            "time": "2015-02-10 07:59:38"
+            "time": "2015-02-11 12:34:05"
         },
         {
             "name": "jaroslavtyc/doctrineum",
@@ -638,7 +638,7 @@
             "source": {
                 "type": "git",
                 "url": "/home/jaroslav/Dropbox/Projects/doctrineum",
-                "reference": "f85b72f7db3257deae3ba340d9f2095845147cd1"
+                "reference": "d364f093e407a922ea4c5310cdfef3cec34038f5"
             },
             "require": {
                 "doctrine/dbal": "2.4.*",
@@ -659,7 +659,7 @@
                 "MIT"
             ],
             "description": "Enumeration type for Doctrine",
-            "time": "2015-02-09 20:28:43"
+            "time": "2015-02-11 07:09:17"
         }
     ],
     "packages-dev": [

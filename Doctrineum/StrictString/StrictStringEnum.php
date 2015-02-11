@@ -18,7 +18,7 @@ class StrictStringEnum extends Enum implements EnumInterface
     public function __construct($enumValue)
     {
         try {
-            $this->checkIfString($enumValue, true /* explicitly strict */);
+            $this->checkIfString($enumValue);
             parent::__construct($this->convertToString($enumValue, true /* explicitly strict */));
         } catch (\Granam\Strict\String\Exceptions\Exception $exception) {
             throw new Exceptions\UnexpectedValueToEnum(
