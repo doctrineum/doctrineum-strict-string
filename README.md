@@ -1,5 +1,5 @@
 # About
-[Doctrine](http://www.doctrine-project.org/) [enum](http://en.wikipedia.org/wiki/Enumerated_type) allowing strictly strings only.
+[Doctrine](http://www.doctrine-project.org/) [enum](http://en.wikipedia.org/wiki/Enumerated_type) allowing strings only.
 
 ### Example
 ```php
