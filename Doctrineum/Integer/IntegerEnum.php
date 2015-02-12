@@ -38,7 +38,7 @@ class IntegerEnum extends Enum implements EnumInterface
         if (is_int($value)) {
             return $value;
         }
-        $stringValue = $this->convertToString($value, false /* not strict */);
+        $stringValue = trim($this->convertToString($value, false /* not strict */));
         $integerValue = intval($stringValue);
         if ((string)$integerValue === $stringValue) { // the cast has been lossless
             return $integerValue;

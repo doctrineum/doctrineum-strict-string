@@ -28,6 +28,43 @@ class IntegerEnumTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
+     */
+    public function string_with_integer_and_spaces_is_trimmed_and_accepted()
+    {
+        $enum = IntegerEnum::get('  12 ');
+        $this->assertSame(12, $enum->getValue());
+        $this->assertSame('12', (string)$enum);
+    }
+
+    /**
+     * @test
+     * @expectedException \Doctrineum\Exceptions\UnexpectedValueToEnum
+     */
+    public function float_cause_exception()
+    {
+        IntegerEnum::get(12.345);
+    }
+
+    /**
+     * @test
+     * @expectedException \Doctrineum\Exceptions\UnexpectedValueToEnum
+     */
+    public function string_float_cause_exception()
+    {
+        IntegerEnum::get('12.345');
+    }
+
+    /**
+     * @test
+     * @expectedException \Doctrineum\Exceptions\UnexpectedValueToEnum
+     */
+    public function string_with_partial_integer_cause_exception()
+    {
+        IntegerEnum::get('12foo');
+    }
+
+    /**
+     * @test
      * @expectedException \Doctrineum\Exceptions\UnexpectedValueToEnum
      */
     public function object_with_integer_and_convertible_to_string_throws_exception_anyway()
