@@ -1,5 +1,5 @@
 <?php
-namespace Doctrineum\Strict\String\Exceptions;
+namespace Doctrineum\Integer\Exceptions;
 
 class LogicTest extends \PHPUnit_Framework_TestCase
 {
@@ -22,7 +22,7 @@ class LogicTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @expectedException \Doctrineum\Strict\String\Exceptions\Exception
+     * @expectedException \Doctrineum\Integer\Exceptions\Exception
      */
     public function extends_local_mark_interface()
     {
