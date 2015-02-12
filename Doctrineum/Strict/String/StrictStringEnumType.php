@@ -17,12 +17,12 @@ class StrictStringEnumType extends EnumType
     const ENUM_CLASS = StrictStringEnum::class;
 
     /**
-     * Convert enum instance to database string (or null) value
+     * Convert enum instance to database string value
      *
      * @param StrictStringEnum $enumValue
      * @param \Doctrine\DBAL\Platforms\AbstractPlatform $platform
      * @throws Exceptions\UnexpectedValueToDatabaseValue
-     * @return string|null
+     * @return string
      */
     public function convertToDatabaseValue($enumValue, AbstractPlatform $platform)
     {
