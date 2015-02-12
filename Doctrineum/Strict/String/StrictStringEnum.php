@@ -1,5 +1,5 @@
 <?php
-namespace Doctrineum\StrictString;
+namespace Doctrineum\Strict\String;
 
 use Doctrineum\Enum;
 use Doctrineum\EnumInterface;

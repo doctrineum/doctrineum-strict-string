@@ -1,5 +1,5 @@
 <?php
-namespace Doctrineum\StrictString;
+namespace Doctrineum\Strict\String;
 
 class StrictStringEnumTest extends \PHPUnit_Framework_TestCase
 {
@@ -19,7 +19,7 @@ class StrictStringEnumTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @expectedException \Doctrineum\StrictString\Exceptions\UnexpectedValueToEnum
+     * @expectedException \Doctrineum\Strict\String\Exceptions\UnexpectedValueToEnum
      */
     public function non_string_cause_exception()
     {

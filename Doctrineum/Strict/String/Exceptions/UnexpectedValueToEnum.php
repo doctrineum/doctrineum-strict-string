@@ -1,5 +1,5 @@
 <?php
-namespace Doctrineum\StrictString\Exceptions;
+namespace Doctrineum\Strict\String\Exceptions;
 
 class UnexpectedValueToEnum extends \Doctrineum\Exceptions\UnexpectedValueToEnum implements Logic {
 

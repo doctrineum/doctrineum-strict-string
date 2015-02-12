@@ -1,5 +1,5 @@
 <?php
-namespace Doctrineum\StrictString;
+namespace Doctrineum\Strict\String;
 
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Granam\Strict\Object\Tests\StrictObjectTestTrait;
@@ -65,7 +65,7 @@ class EnumTypeTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @expectedException \Doctrineum\StrictString\Exceptions\UnexpectedValueToEnum
+     * @expectedException \Doctrineum\Strict\String\Exceptions\UnexpectedValueToEnum
      */
     public function null_to_php_value_causes_exception()
     {
@@ -97,7 +97,7 @@ class EnumTypeTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @expectedException \Doctrineum\StrictString\Exceptions\UnexpectedValueToEnum
+     * @expectedException \Doctrineum\Strict\String\Exceptions\UnexpectedValueToEnum
      */
     public function integer_to_php_value_cause_exception()
     {
@@ -107,7 +107,7 @@ class EnumTypeTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @expectedException \Doctrineum\StrictString\Exceptions\UnexpectedValueToEnum
+     * @expectedException \Doctrineum\Strict\String\Exceptions\UnexpectedValueToEnum
      */
     public function zero_integer_to_php_value_cause_exceptions()
     {
@@ -117,7 +117,7 @@ class EnumTypeTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @expectedException \Doctrineum\StrictString\Exceptions\UnexpectedValueToEnum
+     * @expectedException \Doctrineum\Strict\String\Exceptions\UnexpectedValueToEnum
      */
     public function float_to_php_value_cause_exception()
     {
@@ -127,7 +127,7 @@ class EnumTypeTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @expectedException \Doctrineum\StrictString\Exceptions\UnexpectedValueToEnum
+     * @expectedException \Doctrineum\Strict\String\Exceptions\UnexpectedValueToEnum
      */
     public function zero_float_to_php_value_cause_exception()
     {
@@ -137,7 +137,7 @@ class EnumTypeTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @expectedException \Doctrineum\StrictString\Exceptions\UnexpectedValueToEnum
+     * @expectedException \Doctrineum\Strict\String\Exceptions\UnexpectedValueToEnum
      */
     public function false_to_php_value_cause_exception()
     {
@@ -147,7 +147,7 @@ class EnumTypeTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @expectedException \Doctrineum\StrictString\Exceptions\UnexpectedValueToEnum
+     * @expectedException \Doctrineum\Strict\String\Exceptions\UnexpectedValueToEnum
      */
     public function true_to_php_value_cause_exception()
     {
@@ -157,7 +157,7 @@ class EnumTypeTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @expectedException \Doctrineum\StrictString\Exceptions\UnexpectedValueToEnum
+     * @expectedException \Doctrineum\Strict\String\Exceptions\UnexpectedValueToEnum
      */
     public function array_to_php_value_cause_exception()
     {
@@ -167,7 +167,7 @@ class EnumTypeTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @expectedException \Doctrineum\StrictString\Exceptions\UnexpectedValueToEnum
+     * @expectedException \Doctrineum\Strict\String\Exceptions\UnexpectedValueToEnum
      */
     public function resource_to_php_value_cause_exception()
     {
@@ -177,7 +177,7 @@ class EnumTypeTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @expectedException \Doctrineum\StrictString\Exceptions\UnexpectedValueToEnum
+     * @expectedException \Doctrineum\Strict\String\Exceptions\UnexpectedValueToEnum
      */
     public function object_to_php_value_cause_exception()
     {
@@ -187,7 +187,7 @@ class EnumTypeTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @expectedException \Doctrineum\StrictString\Exceptions\UnexpectedValueToEnum
+     * @expectedException \Doctrineum\Strict\String\Exceptions\UnexpectedValueToEnum
      */
     public function callback_to_php_value_cause_exception()
     {

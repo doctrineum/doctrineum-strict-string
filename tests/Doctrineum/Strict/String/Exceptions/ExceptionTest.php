@@ -1,5 +1,5 @@
 <?php
-namespace Doctrineum\StrictString\Exceptions;
+namespace Doctrineum\Strict\String\Exceptions;
 
 class ExceptionTest extends \PHPUnit_Framework_TestCase
 {
@@ -18,7 +18,7 @@ class ExceptionTest extends \PHPUnit_Framework_TestCase
      */
     public function extends_base_doctrineum_interface()
     {
-        throw new TestLogicInterface();
+        throw new TestExceptionInterface();
     }
 
 }

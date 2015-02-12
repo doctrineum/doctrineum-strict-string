@@ -1,5 +1,5 @@
 <?php
-namespace Doctrineum\StrictString;
+namespace Doctrineum\Strict\String;
 
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrineum\EnumType;

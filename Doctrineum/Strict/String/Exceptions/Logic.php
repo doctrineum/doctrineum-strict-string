@@ -1,5 +1,5 @@
 <?php
-namespace Doctrineum\StrictString\Exceptions;
+namespace Doctrineum\Strict\String\Exceptions;
 
 interface Logic extends \Doctrineum\Exceptions\Logic, Exception
 {

@@ -1,5 +1,5 @@
 <?php
-namespace Doctrineum\StrictString\Exceptions;
+namespace Doctrineum\Strict\String\Exceptions;
 
 class UnexpectedValueToDatabaseValue extends \Doctrineum\Exceptions\UnexpectedValueToDatabaseValue implements Logic {
 
