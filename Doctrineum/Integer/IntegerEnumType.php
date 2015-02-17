@@ -2,7 +2,7 @@
 namespace Doctrineum\Integer;
 
 use Doctrine\DBAL\Platforms\AbstractPlatform;
-use Doctrineum\EnumType;
+use Doctrineum\Generic\EnumType;
 
 /**
  * Class EnumType

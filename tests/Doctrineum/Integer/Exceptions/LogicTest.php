@@ -13,7 +13,7 @@ class LogicTest extends \PHPUnit_Framework_TestCase
     }
     /**
      * @test
-     * @expectedException \Doctrineum\Exceptions\Logic
+     * @expectedException \Doctrineum\Generic\Exceptions\Logic
      */
     public function extends_doctrineum_logic_interface()
     {

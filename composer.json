@@ -13,7 +13,7 @@
         },
         {
             "type": "vcs",
-            "url": "/home/jaroslav/Dropbox/Projects/doctrineum"
+            "url": "/home/jaroslav/Dropbox/Projects/doctrineum/generic"
         },
         {
             "type": "vcs",
@@ -30,7 +30,7 @@
     ],
     "require": {
         "php": ">=5.5",
-        "jaroslavtyc/doctrineum": "dev-master",
+        "jaroslavtyc/doctrineum-generic": "dev-master",
         "granam/strict-object": "dev-master",
         "granam/strict-string": "dev-master",
         "granam/strict-scalar": "dev-master",

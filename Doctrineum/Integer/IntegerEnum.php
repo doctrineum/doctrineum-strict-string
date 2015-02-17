@@ -1,8 +1,8 @@
 <?php
 namespace Doctrineum\Integer;
 
-use Doctrineum\Enum;
-use Doctrineum\EnumInterface;
+use Doctrineum\Generic\Enum;
+use Doctrineum\Generic\EnumInterface;
 use Granam\Strict\String\StrictStringTrait;
 
 /**

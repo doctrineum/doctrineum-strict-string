@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "7cb54698e89395d55341da53b1966ba5",
+    "hash": "0998957353e098f87b34ef492d993be5",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -480,7 +480,7 @@
             "source": {
                 "type": "git",
                 "url": "/home/jaroslav/Dropbox/Projects/granam/exception-hierarchy",
-                "reference": "4c7a0f66956c39bdfb6a3a96cfab77278dfd3e96"
+                "reference": "a083f48602a1114c7bc91e4715c8757bab3cd20e"
             },
             "require": {
                 "php": ">=5.3"
@@ -506,7 +506,7 @@
                 "php",
                 "runtime"
             ],
-            "time": "2015-02-11 07:19:54"
+            "time": "2015-02-17 08:30:45"
         },
         {
             "name": "granam/strict-object",
@@ -514,9 +514,10 @@
             "source": {
                 "type": "git",
                 "url": "/home/jaroslav/Dropbox/Projects/granam/strict-object",
-                "reference": "e3d92995ecff098b18760da0ecc39047bceb9636"
+                "reference": "6c21fbe03d70b501f46d4eb3189ca879a1d2b4d2"
             },
             "require": {
+                "granam/exception-hierarchy": "dev-master",
                 "php": ">=5.4.0"
             },
             "require-dev": {
@@ -545,7 +546,7 @@
                 "php",
                 "strict"
             ],
-            "time": "2015-02-02 14:04:53"
+            "time": "2015-02-11 17:35:11"
         },
         {
             "name": "granam/strict-scalar",
@@ -633,15 +634,16 @@
             "time": "2015-02-11 12:34:05"
         },
         {
-            "name": "jaroslavtyc/doctrineum",
+            "name": "jaroslavtyc/doctrineum-generic",
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "/home/jaroslav/Dropbox/Projects/doctrineum",
-                "reference": "d364f093e407a922ea4c5310cdfef3cec34038f5"
+                "url": "/home/jaroslav/Dropbox/Projects/doctrineum/generic",
+                "reference": "ebfa8a4d249eed9a0906f8d6567b1ad901ce5371"
             },
             "require": {
                 "doctrine/dbal": "2.4.*",
+                "granam/exception-hierarchy": "dev-master",
                 "granam/strict-object": "dev-master",
                 "php": ">=5.5"
             },
@@ -659,7 +661,7 @@
                 "MIT"
             ],
             "description": "Enumeration type for Doctrine",
-            "time": "2015-02-11 07:09:17"
+            "time": "2015-02-17 10:01:36"
         }
     ],
     "packages-dev": [
@@ -1684,7 +1686,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "jaroslavtyc/doctrineum": 20,
+        "jaroslavtyc/doctrineum-generic": 20,
         "granam/strict-object": 20,
         "granam/strict-string": 20,
         "granam/strict-scalar": 20,

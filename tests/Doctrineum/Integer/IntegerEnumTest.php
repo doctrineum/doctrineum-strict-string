@@ -38,7 +38,7 @@ class IntegerEnumTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @expectedException \Doctrineum\Exceptions\UnexpectedValueToEnum
+     * @expectedException \Doctrineum\Generic\Exceptions\UnexpectedValueToEnum
      */
     public function float_cause_exception()
     {
@@ -47,7 +47,7 @@ class IntegerEnumTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @expectedException \Doctrineum\Exceptions\UnexpectedValueToEnum
+     * @expectedException \Doctrineum\Generic\Exceptions\UnexpectedValueToEnum
      */
     public function string_float_cause_exception()
     {
@@ -56,7 +56,7 @@ class IntegerEnumTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @expectedException \Doctrineum\Exceptions\UnexpectedValueToEnum
+     * @expectedException \Doctrineum\Generic\Exceptions\UnexpectedValueToEnum
      */
     public function string_with_partial_integer_cause_exception()
     {
@@ -65,7 +65,7 @@ class IntegerEnumTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @expectedException \Doctrineum\Exceptions\UnexpectedValueToEnum
+     * @expectedException \Doctrineum\Generic\Exceptions\UnexpectedValueToEnum
      */
     public function object_with_integer_and_convertible_to_string_throws_exception_anyway()
     {
@@ -74,7 +74,7 @@ class IntegerEnumTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @expectedException \Doctrineum\Exceptions\UnexpectedValueToEnum
+     * @expectedException \Doctrineum\Generic\Exceptions\UnexpectedValueToEnum
      */
     public function object_with_non_numeric_string_cause_exception_even_if_to_string_convertible()
     {
