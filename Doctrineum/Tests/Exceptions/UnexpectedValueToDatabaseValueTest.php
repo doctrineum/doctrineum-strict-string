@@ -1,5 +1,5 @@
 <?php
-namespace Doctrineum\Integer\Exceptions;
+namespace Doctrineum\Strict\String\Exceptions;
 
 class UnexpectedValueToDatabaseValueTest extends \PHPUnit_Framework_TestCase {
 
@@ -14,7 +14,7 @@ class UnexpectedValueToDatabaseValueTest extends \PHPUnit_Framework_TestCase {
 
     /**
      * @test
-     * @expectedException \Doctrineum\Integer\Exceptions\Logic
+     * @expectedException \Doctrineum\Strict\String\Exceptions\UnexpectedValueToDatabaseValue
      */
     public function is_local_logic_exception_exception()
     {

@@ -1,5 +1,5 @@
 <?php
-namespace Doctrineum\Integer\Exceptions;
+namespace Doctrineum\Strict\String\Exceptions;
 
 class ExceptionTest extends \PHPUnit_Framework_TestCase
 {
