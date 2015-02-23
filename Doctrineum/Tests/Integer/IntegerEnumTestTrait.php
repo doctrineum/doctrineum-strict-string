@@ -1,12 +1,15 @@
 <?php
-namespace Doctrineum\Integer;
+namespace Doctrineum\Tests\Integer;
 
-class IntegerEnumTest extends \PHPUnit_Framework_TestCase
+use Doctrineum\Integer\IntegerEnum;
+
+trait IntegerEnumTestTrait
 {
     /** @test */
     public function can_create_instance()
     {
         $instance = IntegerEnum::get(12345);
+        /** @var \PHPUnit_Framework_TestCase $this */
         $this->assertInstanceOf(IntegerEnum::class, $instance);
     }
 
@@ -14,6 +17,7 @@ class IntegerEnumTest extends \PHPUnit_Framework_TestCase
     public function returns_the_same_integer_as_created_with()
     {
         $enum = IntegerEnum::get($integer = 12345);
+        /** @var \PHPUnit_Framework_TestCase $this */
         $this->assertSame($integer, $enum->getValue());
         $this->assertSame("$integer", (string)$enum);
     }
@@ -22,6 +26,7 @@ class IntegerEnumTest extends \PHPUnit_Framework_TestCase
     public function returns_integer_created_from_string_created_with()
     {
         $enum = IntegerEnum::get($stringInteger = '12345');
+        /** @var \PHPUnit_Framework_TestCase $this */
         $this->assertSame(intval($stringInteger), $enum->getValue());
         $this->assertSame($stringInteger, (string)$enum);
     }
@@ -32,6 +37,7 @@ class IntegerEnumTest extends \PHPUnit_Framework_TestCase
     public function string_with_integer_and_spaces_is_trimmed_and_accepted()
     {
         $enum = IntegerEnum::get('  12 ');
+        /** @var \PHPUnit_Framework_TestCase $this */
         $this->assertSame(12, $enum->getValue());
         $this->assertSame('12', (string)$enum);
     }

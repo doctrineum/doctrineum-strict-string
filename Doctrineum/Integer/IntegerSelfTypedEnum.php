@@ -1,15 +1,16 @@
 <?php
 namespace Doctrineum\Integer;
 
-use Doctrineum\Generic\Enum;
+use Doctrineum\Generic\SelfTypedEnum;
 
 /**
- * Inspired by @link http://github.com/marc-mabe/php-enum
- */
-class IntegerEnum extends Enum
+* @method static IntegerSelfTypedEnum getType($name),
+ * @see SelfTypedEnum::getType
+*/
+class IntegerSelfTypedEnum extends SelfTypedEnum
 {
-
     use IntegerEnumTrait;
+    use IntegerEnumTypeTrait;
 
     /**
      * @param int $enumValue
@@ -18,7 +19,7 @@ class IntegerEnum extends Enum
     {
         try {
             parent::__construct($this->convertToInteger($enumValue));
-        } catch (\Granam\Strict\String\Exceptions\Exception $exception) {
+        } /** @noinspection PhpUnnecessaryFullyQualifiedNameInspection */ catch (\Granam\Strict\String\Exceptions\Exception $exception) {
             throw new Exceptions\UnexpectedValueToEnum(
                 'Expecting integer value only, got ' . gettype($enumValue), $exception->getCode(), $exception
             );

@@ -1,21 +1,22 @@
 <?php
-namespace Doctrineum\Integer;
+namespace Doctrineum\Tests\Integer;
 
 use Doctrine\DBAL\Platforms\AbstractPlatform;
-use Granam\Strict\Object\Tests\StrictObjectTestTrait;
+use Doctrine\DBAL\Types\Type;
+use Doctrineum\Integer\IntegerEnum;
+use Doctrineum\Integer\IntegerEnumType;
 
-class IntegerEnumTypeTest extends \PHPUnit_Framework_TestCase
+trait IntegerEnumTypeTestTrait
 {
-    use StrictObjectTestTrait;
 
     // SET UP
 
     protected function setUp()
     {
-        if (\Doctrine\DBAL\Types\Type::hasType(IntegerEnumType::TYPE)) {
-            \Doctrine\DBAL\Types\Type::overrideType(IntegerEnumType::TYPE, IntegerEnumType::class);
+        if (Type::hasType(IntegerEnumType::TYPE)) {
+            Type::overrideType(IntegerEnumType::TYPE, IntegerEnumType::class);
         } else {
-            \Doctrine\DBAL\Types\Type::addType(IntegerEnumType::TYPE, IntegerEnumType::class);
+            Type::addType(IntegerEnumType::TYPE, IntegerEnumType::class);
         }
     }
 
@@ -39,6 +40,7 @@ class IntegerEnumTypeTest extends \PHPUnit_Framework_TestCase
     public function instance_can_be_obtained()
     {
         $instance = IntegerEnumType::getType(IntegerEnumType::TYPE);
+        /** @var \PHPUnit_Framework_TestCase $this */
         $this->assertInstanceOf(IntegerEnumType::class, $instance);
     }
 
@@ -46,7 +48,8 @@ class IntegerEnumTypeTest extends \PHPUnit_Framework_TestCase
     public function sql_declaration_is_valid()
     {
         $enumType = IntegerEnumType::getType(IntegerEnumType::TYPE);
-        $sql = $enumType->getSQLDeclaration([], \Mockery::mock(AbstractPlatform::class));
+        $sql = $enumType->getSQLDeclaration([], $this->getAbstractPlatform());
+        /** @var \PHPUnit_Framework_TestCase $this */
         $this->assertSame('INTEGER', $sql);
     }
 
@@ -60,7 +63,9 @@ class IntegerEnumTypeTest extends \PHPUnit_Framework_TestCase
         $enum->shouldReceive('getValue')
             ->once()
             ->andReturn($value = 12345);
-        $this->assertSame($value, $enumType->convertToDatabaseValue($enum, \Mockery::mock(AbstractPlatform::class)));
+        /** @var IntegerEnum $enum */
+        /** @var \PHPUnit_Framework_TestCase|IntegerEnumTypeTestTrait $this */
+        $this->assertSame($value, $enumType->convertToDatabaseValue($enum, $this->getAbstractPlatform()));
     }
 
     /**
@@ -69,7 +74,8 @@ class IntegerEnumTypeTest extends \PHPUnit_Framework_TestCase
     public function integer_to_php_value_gives_enum_with_that_integer()
     {
         $enumType = IntegerEnumType::getType(IntegerEnumType::TYPE);
-        $enum = $enumType->convertToPHPValue($integer = 12345, \Mockery::mock(AbstractPlatform::class));
+        $enum = $enumType->convertToPHPValue($integer = 12345, $this->getAbstractPlatform());
+        /** @var \PHPUnit_Framework_TestCase $this */
         $this->assertInstanceOf(IntegerEnum::class, $enum);
         $this->assertSame($integer, $enum->getValue());
         $this->assertSame("$integer", (string)$enum);
@@ -82,7 +88,7 @@ class IntegerEnumTypeTest extends \PHPUnit_Framework_TestCase
     public function string_integer_to_php_value_causes_exception()
     {
         $enumType = IntegerEnumType::getType(IntegerEnumType::TYPE);
-        $enumType->convertToPHPValue('12345', \Mockery::mock(AbstractPlatform::class));
+        $enumType->convertToPHPValue('12345', $this->getAbstractPlatform());
     }
 
     /**
@@ -92,7 +98,7 @@ class IntegerEnumTypeTest extends \PHPUnit_Framework_TestCase
     public function null_to_php_value_causes_exception()
     {
         $enumType = IntegerEnumType::getType(IntegerEnumType::TYPE);
-        $enumType->convertToPHPValue(null, \Mockery::mock(AbstractPlatform::class));
+        $enumType->convertToPHPValue(null, $this->getAbstractPlatform());
     }
 
     /**
@@ -102,7 +108,7 @@ class IntegerEnumTypeTest extends \PHPUnit_Framework_TestCase
     public function empty_string_to_php_value_causes_exception()
     {
         $enumType = IntegerEnumType::getType(IntegerEnumType::TYPE);
-        $enumType->convertToPHPValue('', \Mockery::mock(AbstractPlatform::class));
+        $enumType->convertToPHPValue('', $this->getAbstractPlatform());
     }
 
     /**
@@ -112,7 +118,7 @@ class IntegerEnumTypeTest extends \PHPUnit_Framework_TestCase
     public function float_to_php_value_cause_exception()
     {
         $enumType = IntegerEnumType::getType(IntegerEnumType::TYPE);
-        $enumType->convertToPHPValue(12345.6789, \Mockery::mock(AbstractPlatform::class));
+        $enumType->convertToPHPValue(12345.6789, $this->getAbstractPlatform());
     }
 
     /**
@@ -122,7 +128,7 @@ class IntegerEnumTypeTest extends \PHPUnit_Framework_TestCase
     public function zero_float_to_php_value_cause_exception()
     {
         $enumType = IntegerEnumType::getType(IntegerEnumType::TYPE);
-        $enumType->convertToPHPValue(0.0, \Mockery::mock(AbstractPlatform::class));
+        $enumType->convertToPHPValue(0.0, $this->getAbstractPlatform());
     }
 
     /**
@@ -132,7 +138,7 @@ class IntegerEnumTypeTest extends \PHPUnit_Framework_TestCase
     public function false_to_php_value_cause_exception()
     {
         $enumType = IntegerEnumType::getType(IntegerEnumType::TYPE);
-        $enumType->convertToPHPValue(false, \Mockery::mock(AbstractPlatform::class));
+        $enumType->convertToPHPValue(false, $this->getAbstractPlatform());
     }
 
     /**
@@ -142,7 +148,7 @@ class IntegerEnumTypeTest extends \PHPUnit_Framework_TestCase
     public function true_to_php_value_cause_exception()
     {
         $enumType = IntegerEnumType::getType(IntegerEnumType::TYPE);
-        $enumType->convertToPHPValue(true, \Mockery::mock(AbstractPlatform::class));
+        $enumType->convertToPHPValue(true, $this->getAbstractPlatform());
     }
 
     /**
@@ -152,7 +158,7 @@ class IntegerEnumTypeTest extends \PHPUnit_Framework_TestCase
     public function array_to_php_value_cause_exception()
     {
         $enumType = IntegerEnumType::getType(IntegerEnumType::TYPE);
-        $enumType->convertToPHPValue([], \Mockery::mock(AbstractPlatform::class));
+        $enumType->convertToPHPValue([], $this->getAbstractPlatform());
     }
 
     /**
@@ -162,7 +168,7 @@ class IntegerEnumTypeTest extends \PHPUnit_Framework_TestCase
     public function resource_to_php_value_cause_exception()
     {
         $enumType = IntegerEnumType::getType(IntegerEnumType::TYPE);
-        $enumType->convertToPHPValue(tmpfile(), \Mockery::mock(AbstractPlatform::class));
+        $enumType->convertToPHPValue(tmpfile(), $this->getAbstractPlatform());
     }
 
     /**
@@ -172,7 +178,7 @@ class IntegerEnumTypeTest extends \PHPUnit_Framework_TestCase
     public function object_to_php_value_cause_exception()
     {
         $enumType = IntegerEnumType::getType(IntegerEnumType::TYPE);
-        $enumType->convertToPHPValue(new \stdClass(), \Mockery::mock(AbstractPlatform::class));
+        $enumType->convertToPHPValue(new \stdClass(), $this->getAbstractPlatform());
     }
 
     /**
@@ -183,6 +189,14 @@ class IntegerEnumTypeTest extends \PHPUnit_Framework_TestCase
     {
         $enumType = IntegerEnumType::getType(IntegerEnumType::TYPE);
         $enumType->convertToPHPValue(function () {
-        }, \Mockery::mock(AbstractPlatform::class));
+        }, $this->getAbstractPlatform());
+    }
+
+    /**
+     * @return AbstractPlatform
+     */
+    private function getAbstractPlatform()
+    {
+        return \Mockery::mock(AbstractPlatform::class);
     }
 }
