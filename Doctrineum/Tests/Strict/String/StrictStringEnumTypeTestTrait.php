@@ -1,52 +1,48 @@
 <?php
-namespace Doctrineum\Strict\String;
+namespace Doctrineum\Tests\Strict\String;
 
 use Doctrine\DBAL\Platforms\AbstractPlatform;
-use Granam\Strict\Object\Tests\StrictObjectTestTrait;
+use Doctrine\DBAL\Types\Type;
+use Doctrineum\Generic\EnumInterface;
 
-class EnumTypeTest extends \PHPUnit_Framework_TestCase
+trait StrictStringEnumTypeTestTrait
 {
-    use StrictObjectTestTrait;
-
-    // SET UP
-
+    /**
+     * @return \Doctrineum\Strict\String\StrictStringEnumType|\Doctrineum\Strict\String\SelfTypedStrictStringEnum
+     */
+    protected function getEnumTypeClass()
+    {
+        return preg_replace('~Test$~', '', static::class);
+    }
+    
     protected function setUp()
     {
-        if (\Doctrine\DBAL\Types\Type::hasType(StrictStringEnumType::TYPE)) {
-            \Doctrine\DBAL\Types\Type::overrideType(StrictStringEnumType::TYPE, StrictStringEnumType::class);
+        $enumTypeClass = $this->getEnumTypeClass();
+        if (Type::hasType($enumTypeClass::getTypeName())) {
+            $enumTypeClass = $this->getEnumTypeClass();
+            Type::overrideType($enumTypeClass::getTypeName(), $enumTypeClass);
         } else {
-            \Doctrine\DBAL\Types\Type::addType(StrictStringEnumType::TYPE, StrictStringEnumType::class);
+            $enumTypeClass = $this->getEnumTypeClass();
+            Type::addType($enumTypeClass::getTypeName(), $enumTypeClass);
         }
     }
-
-    protected function tearDown()
-    {
-        \Mockery::close();
-    }
-
-    /**
-     * @return \Doctrine\DBAL\Types\Type
-     * @throws \Doctrine\DBAL\DBALException
-     */
-    protected function createObjectInstance()
-    {
-        return StrictStringEnumType::getType(StrictStringEnumType::TYPE);
-    }
-
-    // TESTS THEMSELVES
 
     /** @test */
     public function instance_can_be_obtained()
     {
-        $instance = StrictStringEnumType::getType(StrictStringEnumType::TYPE);
-        $this->assertInstanceOf(StrictStringEnumType::class, $instance);
+        $enumTypeClass = $this->getEnumTypeClass();
+        $instance = $enumTypeClass::getType($enumTypeClass::getTypeName());
+        /** @var \PHPUnit_Framework_TestCase $this */
+        $this->assertInstanceOf($enumTypeClass, $instance);
     }
 
     /** @test */
     public function sql_declaration_is_valid()
     {
-        $enumType = StrictStringEnumType::getType(StrictStringEnumType::TYPE);
+        $enumTypeClass = $this->getEnumTypeClass();
+        $enumType = $enumTypeClass::getType($enumTypeClass::getTypeName());
         $sql = $enumType->getSQLDeclaration([], \Mockery::mock(AbstractPlatform::class));
+        /** @var \PHPUnit_Framework_TestCase $this */
         $this->assertSame('VARCHAR(64)', $sql);
     }
 
@@ -55,12 +51,16 @@ class EnumTypeTest extends \PHPUnit_Framework_TestCase
      */
     public function enum_as_database_value_is_string_value_of_that_enum()
     {
-        $enumType = StrictStringEnumType::getType(StrictStringEnumType::TYPE);
-        $enum = \Mockery::mock(StrictStringEnum::class);
-        $enum->shouldReceive('getValue')
+        $enumTypeClass = $this->getEnumTypeClass();
+        $enumType = $enumTypeClass::getType($enumTypeClass::getTypeName());
+        $enum = \Mockery::mock(EnumInterface::class);
+        $enum->shouldReceive('getEnumValue')
             ->once()
             ->andReturn($value = 'foo');
+        /** @var \PHPUnit_Framework_TestCase $this */
+        /** @var EnumInterface $enum */
         $this->assertSame($value, $enumType->convertToDatabaseValue($enum, \Mockery::mock(AbstractPlatform::class)));
+        \Mockery::close();
     }
 
     /**
@@ -69,7 +69,8 @@ class EnumTypeTest extends \PHPUnit_Framework_TestCase
      */
     public function null_to_php_value_causes_exception()
     {
-        $enumType = StrictStringEnumType::getType(StrictStringEnumType::TYPE);
+        $enumTypeClass = $this->getEnumTypeClass();
+        $enumType = $enumTypeClass::getType($enumTypeClass::getTypeName());
         $enumType->convertToPHPValue(null, \Mockery::mock(AbstractPlatform::class));
     }
 
@@ -78,10 +79,12 @@ class EnumTypeTest extends \PHPUnit_Framework_TestCase
      */
     public function string_to_php_value_is_enum_with_that_string()
     {
-        $enumType = StrictStringEnumType::getType(StrictStringEnumType::TYPE);
+        $enumTypeClass = $this->getEnumTypeClass();
+        $enumType = $enumTypeClass::getType($enumTypeClass::getTypeName());
         $enum = $enumType->convertToPHPValue($string = 'foo', \Mockery::mock(AbstractPlatform::class));
-        $this->assertInstanceOf(StrictStringEnum::class, $enum);
-        $this->assertSame($string, $enum->getValue());
+        /** @var \PHPUnit_Framework_TestCase $this */
+        $this->assertInstanceOf(EnumInterface::class, $enum);
+        $this->assertSame($string, $enum->getEnumValue());
     }
 
     /**
@@ -89,10 +92,12 @@ class EnumTypeTest extends \PHPUnit_Framework_TestCase
      */
     public function empty_string_to_php_value_is_enum_with_that_empty_string()
     {
-        $enumType = StrictStringEnumType::getType(StrictStringEnumType::TYPE);
+        $enumTypeClass = $this->getEnumTypeClass();
+        $enumType = $enumTypeClass::getType($enumTypeClass::getTypeName());
         $enum = $enumType->convertToPHPValue($emptyString = '', \Mockery::mock(AbstractPlatform::class));
-        $this->assertInstanceOf(StrictStringEnum::class, $enum);
-        $this->assertSame($emptyString, $enum->getValue());
+        /** @var \PHPUnit_Framework_TestCase $this */
+        $this->assertInstanceOf(EnumInterface::class, $enum);
+        $this->assertSame($emptyString, $enum->getEnumValue());
     }
 
     /**
@@ -101,7 +106,8 @@ class EnumTypeTest extends \PHPUnit_Framework_TestCase
      */
     public function integer_to_php_value_cause_exception()
     {
-        $enumType = StrictStringEnumType::getType(StrictStringEnumType::TYPE);
+        $enumTypeClass = $this->getEnumTypeClass();
+        $enumType = $enumTypeClass::getType($enumTypeClass::getTypeName());
         $enumType->convertToPHPValue(12345, \Mockery::mock(AbstractPlatform::class));
     }
 
@@ -111,7 +117,8 @@ class EnumTypeTest extends \PHPUnit_Framework_TestCase
      */
     public function zero_integer_to_php_value_cause_exceptions()
     {
-        $enumType = StrictStringEnumType::getType(StrictStringEnumType::TYPE);
+        $enumTypeClass = $this->getEnumTypeClass();
+        $enumType = $enumTypeClass::getType($enumTypeClass::getTypeName());
         $enumType->convertToPHPValue(0, \Mockery::mock(AbstractPlatform::class));
     }
 
@@ -121,7 +128,8 @@ class EnumTypeTest extends \PHPUnit_Framework_TestCase
      */
     public function float_to_php_value_cause_exception()
     {
-        $enumType = StrictStringEnumType::getType(StrictStringEnumType::TYPE);
+        $enumTypeClass = $this->getEnumTypeClass();
+        $enumType = $enumTypeClass::getType($enumTypeClass::getTypeName());
         $enumType->convertToPHPValue(12345.6789, \Mockery::mock(AbstractPlatform::class));
     }
 
@@ -131,7 +139,8 @@ class EnumTypeTest extends \PHPUnit_Framework_TestCase
      */
     public function zero_float_to_php_value_cause_exception()
     {
-        $enumType = StrictStringEnumType::getType(StrictStringEnumType::TYPE);
+        $enumTypeClass = $this->getEnumTypeClass();
+        $enumType = $enumTypeClass::getType($enumTypeClass::getTypeName());
         $enumType->convertToPHPValue(0.0, \Mockery::mock(AbstractPlatform::class));
     }
 
@@ -141,7 +150,8 @@ class EnumTypeTest extends \PHPUnit_Framework_TestCase
      */
     public function false_to_php_value_cause_exception()
     {
-        $enumType = StrictStringEnumType::getType(StrictStringEnumType::TYPE);
+        $enumTypeClass = $this->getEnumTypeClass();
+        $enumType = $enumTypeClass::getType($enumTypeClass::getTypeName());
         $enumType->convertToPHPValue(false, \Mockery::mock(AbstractPlatform::class));
     }
 
@@ -151,7 +161,8 @@ class EnumTypeTest extends \PHPUnit_Framework_TestCase
      */
     public function true_to_php_value_cause_exception()
     {
-        $enumType = StrictStringEnumType::getType(StrictStringEnumType::TYPE);
+        $enumTypeClass = $this->getEnumTypeClass();
+        $enumType = $enumTypeClass::getType($enumTypeClass::getTypeName());
         $enumType->convertToPHPValue(true, \Mockery::mock(AbstractPlatform::class));
     }
 
@@ -161,7 +172,8 @@ class EnumTypeTest extends \PHPUnit_Framework_TestCase
      */
     public function array_to_php_value_cause_exception()
     {
-        $enumType = StrictStringEnumType::getType(StrictStringEnumType::TYPE);
+        $enumTypeClass = $this->getEnumTypeClass();
+        $enumType = $enumTypeClass::getType($enumTypeClass::getTypeName());
         $enumType->convertToPHPValue([], \Mockery::mock(AbstractPlatform::class));
     }
 
@@ -171,7 +183,8 @@ class EnumTypeTest extends \PHPUnit_Framework_TestCase
      */
     public function resource_to_php_value_cause_exception()
     {
-        $enumType = StrictStringEnumType::getType(StrictStringEnumType::TYPE);
+        $enumTypeClass = $this->getEnumTypeClass();
+        $enumType = $enumTypeClass::getType($enumTypeClass::getTypeName());
         $enumType->convertToPHPValue(tmpfile(), \Mockery::mock(AbstractPlatform::class));
     }
 
@@ -181,7 +194,8 @@ class EnumTypeTest extends \PHPUnit_Framework_TestCase
      */
     public function object_to_php_value_cause_exception()
     {
-        $enumType = StrictStringEnumType::getType(StrictStringEnumType::TYPE);
+        $enumTypeClass = $this->getEnumTypeClass();
+        $enumType = $enumTypeClass::getType($enumTypeClass::getTypeName());
         $enumType->convertToPHPValue(new \stdClass(), \Mockery::mock(AbstractPlatform::class));
     }
 
@@ -191,8 +205,10 @@ class EnumTypeTest extends \PHPUnit_Framework_TestCase
      */
     public function callback_to_php_value_cause_exception()
     {
-        $enumType = StrictStringEnumType::getType(StrictStringEnumType::TYPE);
+        $enumTypeClass = $this->getEnumTypeClass();
+        $enumType = $enumTypeClass::getType($enumTypeClass::getTypeName());
         $enumType->convertToPHPValue(function () {
         }, \Mockery::mock(AbstractPlatform::class));
     }
+
 }

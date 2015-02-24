@@ -3,15 +3,9 @@ namespace Doctrineum\Strict\String;
 
 use Doctrineum\Generic\Enum;
 use Doctrineum\GEneric\EnumInterface;
-use Granam\Strict\String\StrictStringTrait;
 
-/**
- * Inspired by @link http://github.com/marc-mabe/php-enum
- */
 class StrictStringEnum extends Enum implements EnumInterface
 {
-    use StrictStringTrait;
-
     /**
      * @param string $enumValue
      */
@@ -19,7 +13,7 @@ class StrictStringEnum extends Enum implements EnumInterface
     {
         try {
             $this->checkIfString($enumValue);
-            parent::__construct($this->convertToString($enumValue, true /* explicitly strict */));
+            parent::__construct($enumValue);
         } catch (\Granam\Strict\String\Exceptions\Exception $exception) {
             throw new Exceptions\UnexpectedValueToEnum(
                 'Expecting string, got ' . gettype($enumValue), $exception->getCode(), $exception
@@ -28,13 +22,27 @@ class StrictStringEnum extends Enum implements EnumInterface
     }
 
     /**
+     * @param mixed $value
+     */
+    protected function checkIfString($value)
+    {
+        if (!is_string($value)) {
+            throw new Exceptions\UnexpectedValueToEnum(
+                'Expected string, got ' . gettype($value)
+            );
+        }
+    }
+
+    /**
+     * Using own namespace to avoid conflicts with other enums
+     *
      * @param string $enumValue
      * @param string $namespace
-     * @return Enum
+     * @return StrictStringEnum
      */
-    public static function get($enumValue, $namespace = __CLASS__)
+    public static function getEnum($enumValue, $namespace = __CLASS__)
     {
-        return parent::get($enumValue, $namespace);
+        return parent::getEnum($enumValue, $namespace);
     }
 
     /**
