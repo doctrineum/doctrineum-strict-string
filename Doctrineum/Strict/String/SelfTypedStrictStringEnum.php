@@ -28,6 +28,8 @@ class SelfTypedStrictStringEnum extends SelfTypedEnum
      * Type has private constructor, the only way how to create an Enum, which is also Type, is by Type factory method,
      * @see Type::getType
      *
+     * Overloaded parent @see \Doctrineum\Generic\EnumTrait::createByValue
+     *
      * @param string $enumValue
      * @return SelfTypedStrictStringEnum
      */
