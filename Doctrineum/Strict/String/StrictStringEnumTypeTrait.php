@@ -45,6 +45,6 @@ trait StrictStringEnumTypeTrait
      */
     public static function getTypeName()
     {
-        return 'strict-string-enum';
+        return 'strict_string_enum';
     }
 }

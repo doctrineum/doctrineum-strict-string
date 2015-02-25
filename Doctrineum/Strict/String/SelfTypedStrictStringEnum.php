@@ -74,7 +74,7 @@ class SelfTypedStrictStringEnum extends SelfTypedEnum
      */
     public static function getTypeName()
     {
-        return 'self-typed-strict-string-enum';
+        return 'self_typed_strict_string_enum';
     }
 
     /**
