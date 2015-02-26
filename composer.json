@@ -1,7 +1,7 @@
 {
-    "name": "jaroslavtyc/doctrineum-integer",
+    "name": "jaroslavtyc/doctrineum-strict-string",
     "type": "library",
-    "description": "Enumeration type for Doctrine - integers only",
+    "description": "Enumeration type for Doctrine - strings only",
     "license": "MIT",
     "autoload": {
         "psr-4": { "Doctrineum\\": "Doctrineum/" }
