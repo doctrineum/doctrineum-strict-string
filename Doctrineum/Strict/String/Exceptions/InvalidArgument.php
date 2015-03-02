@@ -1,7 +1,7 @@
 <?php
 namespace Doctrineum\Strict\String\Exceptions;
 
-class InvalidArgument extends \Doctrineum\Generic\Exceptions\InvalidArgument implements Logic
+class InvalidArgument extends \Doctrineum\Scalar\Exceptions\InvalidArgument implements Logic
 {
 
 }

@@ -1,7 +1,7 @@
 <?php
 namespace Doctrineum\Strict\String;
 
-use Doctrineum\Generic\SelfTypedEnum;
+use Doctrineum\Scalar\SelfTypedEnum;
 
 /**
  * @method static SelfTypedStrictStringEnum getType($name),

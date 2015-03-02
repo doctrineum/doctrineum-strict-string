@@ -1,7 +1,7 @@
 <?php
 namespace Doctrineum\Strict\String;
 
-use Doctrineum\Generic\EnumType;
+use Doctrineum\Scalar\EnumType;
 
 /**
  * Class EnumType

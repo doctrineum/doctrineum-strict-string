@@ -27,7 +27,7 @@ class SelfTypedStrictStringEnumTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @expectedException \Doctrineum\Generic\Exceptions\SelfTypedEnumConstantNamespaceChanged
+     * @expectedException \Doctrineum\Scalar\Exceptions\SelfTypedEnumConstantNamespaceChanged
      */
     public function changing_enum_namespace_cause_exception()
     {

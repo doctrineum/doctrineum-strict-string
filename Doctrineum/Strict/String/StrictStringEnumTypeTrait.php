@@ -2,11 +2,11 @@
 namespace Doctrineum\Strict\String;
 
 use Doctrine\DBAL\Platforms\AbstractPlatform;
-use Doctrineum\Generic\EnumInterface;
+use Doctrineum\Scalar\EnumInterface;
 
 /**
  * @method integer convertToDatabaseValue(EnumInterface $enumValue, AbstractPlatform $platform)
- * @see \Doctrineum\Generic\EnumType::convertToDatabaseValue
+ * @see \Doctrineum\Scalar\EnumType::convertToDatabaseValue
  */
 trait StrictStringEnumTypeTrait
 {

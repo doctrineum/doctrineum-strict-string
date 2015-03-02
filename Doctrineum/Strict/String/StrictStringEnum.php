@@ -1,8 +1,8 @@
 <?php
 namespace Doctrineum\Strict\String;
 
-use Doctrineum\Generic\Enum;
-use Doctrineum\GEneric\EnumInterface;
+use Doctrineum\Scalar\Enum;
+use Doctrineum\Scalar\EnumInterface;
 
 class StrictStringEnum extends Enum implements EnumInterface
 {
