@@ -33,10 +33,43 @@ trait StrictStringEnumTestTrait
      * @test
      * @expectedException \Doctrineum\Strict\String\Exceptions\UnexpectedValueToEnum
      */
-    public function non_string_cause_exception()
+    public function null_as_non_string_cause_exception()
     {
         $enumClass = $this->getEnumClass();
         $enumClass::getEnum(null);
     }
 
+    /**
+     * @test
+     * @expectedException \Doctrineum\Strict\String\Exceptions\UnexpectedValueToEnum
+     */
+    public function integer_zero_as_string_cause_exception()
+    {
+        $enumClass = $this->getEnumClass();
+        $enumClass::getEnum(0);
+    }
+
+    /**
+     * @test
+     * @expectedException \Doctrineum\Strict\String\Exceptions\UnexpectedValueToEnum
+     */
+    public function float_zero_as_string_cause_exception()
+    {
+        $enumClass = $this->getEnumClass();
+        $enumClass::getEnum(0.0);
+    }
+
+    /** @test */
+    public function any_enum_namespace_is_accepted()
+    {
+        $strictStringEnumClass = $this->getEnumClass();
+        $strictStringEnum = $strictStringEnumClass::getEnum($value = 'foo', $namespace = 'bar');
+        /** @var \PHPUnit_Framework_TestCase $this */
+        $this->assertInstanceOf($strictStringEnumClass, $strictStringEnum);
+        $this->assertSame($value, $strictStringEnum->getEnumValue());
+        $this->assertSame($value, (string)$strictStringEnum);
+        $inDifferentNamespace = $strictStringEnumClass::getEnum($value, $namespace . 'baz');
+        $this->assertInstanceOf($strictStringEnumClass, $inDifferentNamespace);
+        $this->assertNotSame($strictStringEnum, $inDifferentNamespace);
+    }
 }

@@ -35,16 +35,4 @@ trait StrictStringEnumTypeTrait
     {
         return StrictStringEnum::class;
     }
-
-    /**
-     * Gets the strongly recommended name of this type.
-     * Its used at @see \Doctrine\DBAL\Platforms\AbstractPlatform::getDoctrineTypeComment
-     * @see EnumType::getName for direct usage
-     *
-     * @return string
-     */
-    public static function getTypeName()
-    {
-        return 'strict_string_enum';
-    }
 }
