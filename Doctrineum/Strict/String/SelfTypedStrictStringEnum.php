@@ -10,7 +10,13 @@ use Doctrineum\Scalar\SelfTypedEnum;
 class SelfTypedStrictStringEnum extends SelfTypedEnum
 {
 
-    use StrictStringEnumTypeTrait;
+    /**
+     * Its not directly used this library - the exactly same value is generated and used by
+     * @see \Doctrineum\Scalar\SelfTypedEnum::getTypeName
+     *
+     * This constant exists to follow Doctrine type conventions.
+     */
+    const SELF_TYPED_STRICT_STING_ENUM = 'self_typed_strict_string_enum';
 
     /**
      * Type has private constructor, the only way how to create an Enum, which is also Type, is by Type factory method,
@@ -38,6 +44,21 @@ class SelfTypedStrictStringEnum extends SelfTypedEnum
                 'Expected string, got ' . gettype($value)
             );
         }
+    }
+
+    /**
+     * @param string $enumValue
+     * @return StrictStringEnum
+     */
+    protected function convertToEnum($enumValue)
+    {
+        if (!is_string($enumValue)) {
+            throw new Exceptions\UnexpectedValueToEnum(
+                'Unexpected value to convert. Expected string, got ' . gettype($enumValue)
+            );
+        }
+
+        return parent::convertToEnum($enumValue);
     }
 
     /**

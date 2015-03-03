@@ -4,6 +4,7 @@ namespace Doctrineum\Tests\Strict\String;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\Type;
 use Doctrineum\Scalar\EnumInterface;
+use Doctrineum\Strict\String\StrictStringEnumType;
 
 trait StrictStringEnumTypeTestTrait
 {
@@ -14,7 +15,15 @@ trait StrictStringEnumTypeTestTrait
     {
         return preg_replace('~Test$~', '', static::class);
     }
-    
+
+    /**
+     * @return \Doctrineum\Strict\String\StrictStringEnum|\Doctrineum\Strict\String\SelfTypedStrictStringEnum
+     */
+    protected function getRegisteredEnumClass()
+    {
+        return preg_replace('~(Type)?Test$~', '', static::class);
+    }
+
     protected function setUp()
     {
         $enumTypeClass = $this->getEnumTypeClass();
@@ -41,9 +50,27 @@ trait StrictStringEnumTypeTestTrait
     {
         $enumTypeClass = $this->getEnumTypeClass();
         $enumType = $enumTypeClass::getType($enumTypeClass::getTypeName());
-        $sql = $enumType->getSQLDeclaration([], \Mockery::mock(AbstractPlatform::class));
+        $sql = $enumType->getSQLDeclaration([], $this->getAbstractPlatform());
         /** @var \PHPUnit_Framework_TestCase $this */
         $this->assertSame('VARCHAR(64)', $sql);
+    }
+
+    /**
+     * @return AbstractPlatform
+     */
+    private function getAbstractPlatform()
+    {
+        return \Mockery::mock(AbstractPlatform::class);
+    }
+
+    /** @test */
+    public function type_name_is_as_expected()
+    {
+        /** @var \PHPUnit_Framework_TestCase $this */
+        $this->assertSame('strict_string_enum', StrictStringEnumType::getTypeName());
+        $this->assertSame('strict_string_enum', StrictStringEnumType::STRICT_STRING_ENUM);
+        $enumType = StrictStringEnumType::getType(StrictStringEnumType::getTypeName());
+        $this->assertSame($enumType::getTypeName(), StrictStringEnumType::getTypeName());
     }
 
     /**
@@ -57,21 +84,10 @@ trait StrictStringEnumTypeTestTrait
         $enum->shouldReceive('getEnumValue')
             ->once()
             ->andReturn($value = 'foo');
-        /** @var \PHPUnit_Framework_TestCase $this */
+        /** @var \PHPUnit_Framework_TestCase|StrictStringEnumTypeTestTrait $this */
         /** @var EnumInterface $enum */
-        $this->assertSame($value, $enumType->convertToDatabaseValue($enum, \Mockery::mock(AbstractPlatform::class)));
+        $this->assertSame($value, $enumType->convertToDatabaseValue($enum, $this->getAbstractPlatform()));
         \Mockery::close();
-    }
-
-    /**
-     * @test
-     * @expectedException \Doctrineum\Strict\String\Exceptions\UnexpectedValueToEnum
-     */
-    public function null_to_php_value_causes_exception()
-    {
-        $enumTypeClass = $this->getEnumTypeClass();
-        $enumType = $enumTypeClass::getType($enumTypeClass::getTypeName());
-        $enumType->convertToPHPValue(null, \Mockery::mock(AbstractPlatform::class));
     }
 
     /**
@@ -81,9 +97,9 @@ trait StrictStringEnumTypeTestTrait
     {
         $enumTypeClass = $this->getEnumTypeClass();
         $enumType = $enumTypeClass::getType($enumTypeClass::getTypeName());
-        $enum = $enumType->convertToPHPValue($string = 'foo', \Mockery::mock(AbstractPlatform::class));
-        /** @var \PHPUnit_Framework_TestCase $this */
-        $this->assertInstanceOf(EnumInterface::class, $enum);
+        $enum = $enumType->convertToPHPValue($string = 'foo', $this->getAbstractPlatform());
+        /** @var \PHPUnit_Framework_TestCase|StrictStringEnumTypeTestTrait $this */
+        $this->assertInstanceOf($this->getRegisteredEnumClass(), $enum);
         $this->assertSame($string, $enum->getEnumValue());
     }
 
@@ -94,10 +110,21 @@ trait StrictStringEnumTypeTestTrait
     {
         $enumTypeClass = $this->getEnumTypeClass();
         $enumType = $enumTypeClass::getType($enumTypeClass::getTypeName());
-        $enum = $enumType->convertToPHPValue($emptyString = '', \Mockery::mock(AbstractPlatform::class));
-        /** @var \PHPUnit_Framework_TestCase $this */
-        $this->assertInstanceOf(EnumInterface::class, $enum);
+        $enum = $enumType->convertToPHPValue($emptyString = '', $this->getAbstractPlatform());
+        /** @var \PHPUnit_Framework_TestCase|StrictStringEnumTypeTestTrait $this */
+        $this->assertInstanceOf($this->getRegisteredEnumClass(), $enum);
         $this->assertSame($emptyString, $enum->getEnumValue());
+    }
+
+    /**
+     * @test
+     * @expectedException \Doctrineum\Strict\String\Exceptions\UnexpectedValueToEnum
+     */
+    public function null_to_php_value_causes_exception()
+    {
+        $enumTypeClass = $this->getEnumTypeClass();
+        $enumType = $enumTypeClass::getType($enumTypeClass::getTypeName());
+        $enumType->convertToPHPValue(null, $this->getAbstractPlatform());
     }
 
     /**
@@ -108,7 +135,7 @@ trait StrictStringEnumTypeTestTrait
     {
         $enumTypeClass = $this->getEnumTypeClass();
         $enumType = $enumTypeClass::getType($enumTypeClass::getTypeName());
-        $enumType->convertToPHPValue(12345, \Mockery::mock(AbstractPlatform::class));
+        $enumType->convertToPHPValue(12345, $this->getAbstractPlatform());
     }
 
     /**
@@ -119,7 +146,7 @@ trait StrictStringEnumTypeTestTrait
     {
         $enumTypeClass = $this->getEnumTypeClass();
         $enumType = $enumTypeClass::getType($enumTypeClass::getTypeName());
-        $enumType->convertToPHPValue(0, \Mockery::mock(AbstractPlatform::class));
+        $enumType->convertToPHPValue(0, $this->getAbstractPlatform());
     }
 
     /**
@@ -130,7 +157,7 @@ trait StrictStringEnumTypeTestTrait
     {
         $enumTypeClass = $this->getEnumTypeClass();
         $enumType = $enumTypeClass::getType($enumTypeClass::getTypeName());
-        $enumType->convertToPHPValue(12345.6789, \Mockery::mock(AbstractPlatform::class));
+        $enumType->convertToPHPValue(12345.6789, $this->getAbstractPlatform());
     }
 
     /**
@@ -141,7 +168,7 @@ trait StrictStringEnumTypeTestTrait
     {
         $enumTypeClass = $this->getEnumTypeClass();
         $enumType = $enumTypeClass::getType($enumTypeClass::getTypeName());
-        $enumType->convertToPHPValue(0.0, \Mockery::mock(AbstractPlatform::class));
+        $enumType->convertToPHPValue(0.0, $this->getAbstractPlatform());
     }
 
     /**
@@ -152,7 +179,7 @@ trait StrictStringEnumTypeTestTrait
     {
         $enumTypeClass = $this->getEnumTypeClass();
         $enumType = $enumTypeClass::getType($enumTypeClass::getTypeName());
-        $enumType->convertToPHPValue(false, \Mockery::mock(AbstractPlatform::class));
+        $enumType->convertToPHPValue(false, $this->getAbstractPlatform());
     }
 
     /**
@@ -163,7 +190,7 @@ trait StrictStringEnumTypeTestTrait
     {
         $enumTypeClass = $this->getEnumTypeClass();
         $enumType = $enumTypeClass::getType($enumTypeClass::getTypeName());
-        $enumType->convertToPHPValue(true, \Mockery::mock(AbstractPlatform::class));
+        $enumType->convertToPHPValue(true, $this->getAbstractPlatform());
     }
 
     /**
@@ -174,7 +201,7 @@ trait StrictStringEnumTypeTestTrait
     {
         $enumTypeClass = $this->getEnumTypeClass();
         $enumType = $enumTypeClass::getType($enumTypeClass::getTypeName());
-        $enumType->convertToPHPValue([], \Mockery::mock(AbstractPlatform::class));
+        $enumType->convertToPHPValue([], $this->getAbstractPlatform());
     }
 
     /**
@@ -185,7 +212,7 @@ trait StrictStringEnumTypeTestTrait
     {
         $enumTypeClass = $this->getEnumTypeClass();
         $enumType = $enumTypeClass::getType($enumTypeClass::getTypeName());
-        $enumType->convertToPHPValue(tmpfile(), \Mockery::mock(AbstractPlatform::class));
+        $enumType->convertToPHPValue(tmpfile(), $this->getAbstractPlatform());
     }
 
     /**
@@ -196,7 +223,7 @@ trait StrictStringEnumTypeTestTrait
     {
         $enumTypeClass = $this->getEnumTypeClass();
         $enumType = $enumTypeClass::getType($enumTypeClass::getTypeName());
-        $enumType->convertToPHPValue(new \stdClass(), \Mockery::mock(AbstractPlatform::class));
+        $enumType->convertToPHPValue(new \stdClass(), $this->getAbstractPlatform());
     }
 
     /**
@@ -208,7 +235,7 @@ trait StrictStringEnumTypeTestTrait
         $enumTypeClass = $this->getEnumTypeClass();
         $enumType = $enumTypeClass::getType($enumTypeClass::getTypeName());
         $enumType->convertToPHPValue(function () {
-        }, \Mockery::mock(AbstractPlatform::class));
+        }, $this->getAbstractPlatform());
     }
 
 }

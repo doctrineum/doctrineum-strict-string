@@ -12,9 +12,10 @@ class SelfTypedStrictStringEnumTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      */
-    public function type_name_has_as_expected()
+    public function type_name_is_as_expected()
     {
         $this->assertSame('self_typed_strict_string_enum', SelfTypedStrictStringEnum::getTypeName());
+        $this->assertSame('self_typed_strict_string_enum', SelfTypedStrictStringEnum::SELF_TYPED_STRICT_STING_ENUM);
         $selfTypedStrictStringEnum = SelfTypedStrictStringEnum::getType(SelfTypedStrictStringEnum::getTypeName());
         $this->assertSame($selfTypedStrictStringEnum::getTypeName(), SelfTypedStrictStringEnum::getTypeName());
     }
