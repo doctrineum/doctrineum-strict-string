@@ -1,6 +1,9 @@
 <?php
 namespace Doctrineum\Tests\Strict\String;
 
+use Doctrineum\Strict\String\SelfTypedStrictStringEnum;
+use Doctrineum\Strict\String\StrictStringEnum;
+
 trait StrictStringEnumTestTrait
 {
     /**
@@ -11,7 +14,9 @@ trait StrictStringEnumTestTrait
         return preg_replace('~Test$~', '', static::class);
     }
 
-    /** @test */
+    /**
+     * @test
+     */
     public function can_create_instance()
     {
         $enumClass = $this->getEnumClass();
@@ -59,17 +64,33 @@ trait StrictStringEnumTestTrait
         $enumClass::getEnum(0.0);
     }
 
-    /** @test */
-    public function any_enum_namespace_is_accepted()
+
+    /**
+     * inner namespace test
+     */
+
+    /**
+     * @test
+     */
+    public function inherited_enum_with_same_value_lives_in_own_inner_namespace()
     {
-        $strictStringEnumClass = $this->getEnumClass();
-        $strictStringEnum = $strictStringEnumClass::getEnum($value = 'foo', $namespace = 'bar');
-        /** @var \PHPUnit_Framework_TestCase $this */
-        $this->assertInstanceOf($strictStringEnumClass, $strictStringEnum);
-        $this->assertSame($value, $strictStringEnum->getEnumValue());
-        $this->assertSame($value, (string)$strictStringEnum);
-        $inDifferentNamespace = $strictStringEnumClass::getEnum($value, $namespace . 'baz');
-        $this->assertInstanceOf($strictStringEnumClass, $inDifferentNamespace);
-        $this->assertNotSame($strictStringEnum, $inDifferentNamespace);
+        $enumClass = $this->getEnumClass();
+
+        $enum = $enumClass::getEnum($value = 'foo');
+        /** @var \PHPUnit_Framework_TestCase|StrictStringEnumTestTrait $this */
+        $this->assertInstanceOf($enumClass, $enum);
+        $this->assertSame($value, $enum->getEnumValue());
+        $this->assertSame($value, (string)$enum);
+
+        $inDifferentNamespace = $this->getInheritedEnum($value);
+        $this->assertInstanceOf($enumClass, $inDifferentNamespace);
+        $this->assertSame($enum->getEnumValue(), $inDifferentNamespace->getEnumValue());
+        $this->assertNotSame($enum, $inDifferentNamespace);
     }
+
+    /**
+     * @param $value
+     * @return StrictStringEnum|SelfTypedStrictStringEnum
+     */
+    abstract protected function getInheritedEnum($value);
 }

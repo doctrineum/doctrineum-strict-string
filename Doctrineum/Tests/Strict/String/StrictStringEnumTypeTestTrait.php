@@ -4,7 +4,7 @@ namespace Doctrineum\Tests\Strict\String;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\Type;
 use Doctrineum\Scalar\EnumInterface;
-use Doctrineum\Strict\String\StrictStringEnumType;
+use Doctrineum\Scalar\EnumType;
 
 trait StrictStringEnumTypeTestTrait
 {
@@ -36,13 +36,19 @@ trait StrictStringEnumTypeTestTrait
         }
     }
 
-    /** @test */
+    /**
+     * @return EnumType
+     *
+     * @test
+     */
     public function instance_can_be_obtained()
     {
         $enumTypeClass = $this->getEnumTypeClass();
         $instance = $enumTypeClass::getType($enumTypeClass::getTypeName());
         /** @var \PHPUnit_Framework_TestCase $this */
         $this->assertInstanceOf($enumTypeClass, $instance);
+
+        return $instance;
     }
 
     /** @test */
@@ -63,14 +69,39 @@ trait StrictStringEnumTypeTestTrait
         return \Mockery::mock(AbstractPlatform::class);
     }
 
-    /** @test */
-    public function type_name_is_as_expected()
+    /**
+     * @param EnumType $enumType
+     *
+     * @test
+     * @depends instance_can_be_obtained
+     */
+    public function type_name_is_as_expected(EnumType $enumType)
     {
-        /** @var \PHPUnit_Framework_TestCase $this */
-        $this->assertSame('strict_string_enum', StrictStringEnumType::getTypeName());
-        $this->assertSame('strict_string_enum', StrictStringEnumType::STRICT_STRING_ENUM);
-        $enumType = StrictStringEnumType::getType(StrictStringEnumType::getTypeName());
-        $this->assertSame($enumType::getTypeName(), StrictStringEnumType::getTypeName());
+        $enumTypeClass = $this->getEnumTypeClass();
+        // like self_typed_strict_string_enum
+        $typeName = $this->convertToTypeName($enumTypeClass);
+        // like SELF_TYPED_STRICT_STRING_ENUM
+        $constantName = strtoupper($typeName);
+        /** @var \PHPUnit_Framework_TestCase|StrictStringEnumTypeTestTrait $this */
+        $this->assertTrue(defined("$enumTypeClass::$constantName"), "Enum type class should has defined constant $enumTypeClass::$constantName");
+        $this->assertSame($enumTypeClass::getTypeName(), $typeName);
+        $this->assertSame($typeName, constant("$enumTypeClass::$constantName"));
+        $this->assertSame($enumType::getTypeName(), $enumTypeClass::getTypeName());
+    }
+
+    /**
+     * @param string $className
+     * @return string
+     */
+    private function convertToTypeName($className)
+    {
+        $withoutType = preg_replace('~Type$~', '', $className);
+        $parts = explode('\\', $withoutType);
+        $baseClassName = $parts[count($parts) - 1];
+        preg_match_all('~(?<words>[A-Z][^A-Z]+)~', $baseClassName, $matches);
+        $concatenated = implode('_', $matches['words']);
+
+        return strtolower($concatenated);
     }
 
     /**
