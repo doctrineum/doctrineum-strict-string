@@ -35,6 +35,17 @@ class StrictStringEnumType extends EnumType
         }
 
         /** @var StrictStringEnum $enumClass */
-        return StrictStringEnum::getEnum($enumValue);
+        return parent::convertToEnum($enumValue);
+    }
+
+    /**
+     * Core idea of self-typed enum.
+     * As an enum class returns itself.
+     *
+     * @return string
+     */
+    protected static function getDefaultEnumClass()
+    {
+        return StrictStringEnum::class;
     }
 }
