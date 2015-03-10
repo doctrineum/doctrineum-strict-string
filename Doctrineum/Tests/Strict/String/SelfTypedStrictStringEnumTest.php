@@ -10,6 +10,17 @@ class SelfTypedStrictStringEnumTest extends \PHPUnit_Framework_TestCase
     use StrictStringEnumTestTrait;
     use StrictStringEnumTypeTestTrait;
 
+    /**
+     * Overloaded parent test to test self-registration
+     *
+     * @test
+     */
+    public function can_be_registered()
+    {
+        SelfTypedStrictStringEnum::registerSelf();
+        $this->assertTrue(Type::hasType(SelfTypedStrictStringEnum::getTypeName()));
+    }
+
     protected function getInheritedEnum($value)
     {
         if (!Type::hasType(TestInheritedSelfTypedStrictStringEnum::getTypeName())) {

@@ -24,22 +24,22 @@ trait StrictStringEnumTypeTestTrait
         return preg_replace('~(Type)?Test$~', '', static::class);
     }
 
-    protected function setUp()
+    /**
+     * @test
+     */
+    public function can_be_registered()
     {
         $enumTypeClass = $this->getEnumTypeClass();
-        if (Type::hasType($enumTypeClass::getTypeName())) {
-            $enumTypeClass = $this->getEnumTypeClass();
-            Type::overrideType($enumTypeClass::getTypeName(), $enumTypeClass);
-        } else {
-            $enumTypeClass = $this->getEnumTypeClass();
-            Type::addType($enumTypeClass::getTypeName(), $enumTypeClass);
-        }
+        Type::addType($enumTypeClass::getTypeName(), $enumTypeClass);
+        /** @var \PHPUnit_Framework_TestCase $this */
+        $this->assertTrue(Type::hasType($enumTypeClass::getTypeName()));
     }
 
     /**
      * @return EnumType
      *
      * @test
+     * @depends can_be_registered
      */
     public function instance_can_be_obtained()
     {
@@ -51,11 +51,14 @@ trait StrictStringEnumTypeTestTrait
         return $instance;
     }
 
-    /** @test */
-    public function sql_declaration_is_valid()
+    /**
+     * @param EnumType $enumType
+     *
+     * @test
+     * @depends instance_can_be_obtained
+     */
+    public function sql_declaration_is_valid(EnumType $enumType)
     {
-        $enumTypeClass = $this->getEnumTypeClass();
-        $enumType = $enumTypeClass::getType($enumTypeClass::getTypeName());
         $sql = $enumType->getSQLDeclaration([], $this->getAbstractPlatform());
         /** @var \PHPUnit_Framework_TestCase $this */
         $this->assertSame('VARCHAR(64)', $sql);
@@ -105,12 +108,13 @@ trait StrictStringEnumTypeTestTrait
     }
 
     /**
+     * @param EnumType $enumType
+     *
      * @test
+     * @depends instance_can_be_obtained
      */
-    public function enum_as_database_value_is_string_value_of_that_enum()
+    public function enum_as_database_value_is_string_value_of_that_enum(EnumType $enumType)
     {
-        $enumTypeClass = $this->getEnumTypeClass();
-        $enumType = $enumTypeClass::getType($enumTypeClass::getTypeName());
         $enum = \Mockery::mock(EnumInterface::class);
         $enum->shouldReceive('getEnumValue')
             ->once()
@@ -122,12 +126,13 @@ trait StrictStringEnumTypeTestTrait
     }
 
     /**
+     * @param EnumType $enumType
+     *
      * @test
+     * @depends instance_can_be_obtained
      */
-    public function string_to_php_value_is_enum_with_that_string()
+    public function string_to_php_value_is_enum_with_that_string(EnumType $enumType)
     {
-        $enumTypeClass = $this->getEnumTypeClass();
-        $enumType = $enumTypeClass::getType($enumTypeClass::getTypeName());
         $enum = $enumType->convertToPHPValue($string = 'foo', $this->getAbstractPlatform());
         /** @var \PHPUnit_Framework_TestCase|StrictStringEnumTypeTestTrait $this */
         $this->assertInstanceOf($this->getRegisteredEnumClass(), $enum);
@@ -135,12 +140,13 @@ trait StrictStringEnumTypeTestTrait
     }
 
     /**
+     * @param EnumType $enumType
+     *
      * @test
+     * @depends instance_can_be_obtained
      */
-    public function empty_string_to_php_value_is_enum_with_that_empty_string()
+    public function empty_string_to_php_value_is_enum_with_that_empty_string(EnumType $enumType)
     {
-        $enumTypeClass = $this->getEnumTypeClass();
-        $enumType = $enumTypeClass::getType($enumTypeClass::getTypeName());
         $enum = $enumType->convertToPHPValue($emptyString = '', $this->getAbstractPlatform());
         /** @var \PHPUnit_Framework_TestCase|StrictStringEnumTypeTestTrait $this */
         $this->assertInstanceOf($this->getRegisteredEnumClass(), $enum);
@@ -148,123 +154,134 @@ trait StrictStringEnumTypeTestTrait
     }
 
     /**
+     * @param EnumType $enumType
+     *
      * @test
+     * @depends instance_can_be_obtained
      * @expectedException \Doctrineum\Strict\String\Exceptions\UnexpectedValueToEnum
      */
-    public function null_to_php_value_causes_exception()
+    public function null_to_php_value_causes_exception(EnumType $enumType)
     {
-        $enumTypeClass = $this->getEnumTypeClass();
-        $enumType = $enumTypeClass::getType($enumTypeClass::getTypeName());
         $enumType->convertToPHPValue(null, $this->getAbstractPlatform());
     }
 
     /**
+     * @param EnumType $enumType
+     *
      * @test
+     * @depends instance_can_be_obtained
      * @expectedException \Doctrineum\Strict\String\Exceptions\UnexpectedValueToEnum
      */
-    public function integer_to_php_value_cause_exception()
+    public function integer_to_php_value_cause_exception(EnumType $enumType)
     {
-        $enumTypeClass = $this->getEnumTypeClass();
-        $enumType = $enumTypeClass::getType($enumTypeClass::getTypeName());
         $enumType->convertToPHPValue(12345, $this->getAbstractPlatform());
     }
 
     /**
+     * @param EnumType $enumType
+     *
      * @test
+     * @depends instance_can_be_obtained
      * @expectedException \Doctrineum\Strict\String\Exceptions\UnexpectedValueToEnum
      */
-    public function zero_integer_to_php_value_cause_exceptions()
+    public function zero_integer_to_php_value_cause_exceptions(EnumType $enumType)
     {
-        $enumTypeClass = $this->getEnumTypeClass();
-        $enumType = $enumTypeClass::getType($enumTypeClass::getTypeName());
         $enumType->convertToPHPValue(0, $this->getAbstractPlatform());
     }
 
     /**
+     * @param EnumType $enumType
+     *
      * @test
+     * @depends instance_can_be_obtained
      * @expectedException \Doctrineum\Strict\String\Exceptions\UnexpectedValueToEnum
      */
-    public function float_to_php_value_cause_exception()
+    public function float_to_php_value_cause_exception(EnumType $enumType)
     {
-        $enumTypeClass = $this->getEnumTypeClass();
-        $enumType = $enumTypeClass::getType($enumTypeClass::getTypeName());
         $enumType->convertToPHPValue(12345.6789, $this->getAbstractPlatform());
     }
 
     /**
+     * @param EnumType $enumType
+     *
      * @test
+     * @depends instance_can_be_obtained
      * @expectedException \Doctrineum\Strict\String\Exceptions\UnexpectedValueToEnum
      */
-    public function zero_float_to_php_value_cause_exception()
+    public function zero_float_to_php_value_cause_exception(EnumType $enumType)
     {
-        $enumTypeClass = $this->getEnumTypeClass();
-        $enumType = $enumTypeClass::getType($enumTypeClass::getTypeName());
         $enumType->convertToPHPValue(0.0, $this->getAbstractPlatform());
     }
 
     /**
+     * @param EnumType $enumType
+     *
      * @test
+     * @depends instance_can_be_obtained
      * @expectedException \Doctrineum\Strict\String\Exceptions\UnexpectedValueToEnum
      */
-    public function false_to_php_value_cause_exception()
+    public function false_to_php_value_cause_exception(EnumType $enumType)
     {
-        $enumTypeClass = $this->getEnumTypeClass();
-        $enumType = $enumTypeClass::getType($enumTypeClass::getTypeName());
         $enumType->convertToPHPValue(false, $this->getAbstractPlatform());
     }
 
     /**
+     * @param EnumType $enumType
+     *
      * @test
+     * @depends instance_can_be_obtained
      * @expectedException \Doctrineum\Strict\String\Exceptions\UnexpectedValueToEnum
      */
-    public function true_to_php_value_cause_exception()
+    public function true_to_php_value_cause_exception(EnumType $enumType)
     {
-        $enumTypeClass = $this->getEnumTypeClass();
-        $enumType = $enumTypeClass::getType($enumTypeClass::getTypeName());
         $enumType->convertToPHPValue(true, $this->getAbstractPlatform());
     }
 
     /**
+     * @param EnumType $enumType
+     *
      * @test
+     * @depends instance_can_be_obtained
      * @expectedException \Doctrineum\Strict\String\Exceptions\UnexpectedValueToEnum
      */
-    public function array_to_php_value_cause_exception()
+    public function array_to_php_value_cause_exception(EnumType $enumType)
     {
-        $enumTypeClass = $this->getEnumTypeClass();
-        $enumType = $enumTypeClass::getType($enumTypeClass::getTypeName());
         $enumType->convertToPHPValue([], $this->getAbstractPlatform());
     }
 
     /**
+     * @param EnumType $enumType
+     *
      * @test
+     * @depends instance_can_be_obtained
      * @expectedException \Doctrineum\Strict\String\Exceptions\UnexpectedValueToEnum
      */
-    public function resource_to_php_value_cause_exception()
+    public function resource_to_php_value_cause_exception(EnumType $enumType)
     {
-        $enumTypeClass = $this->getEnumTypeClass();
-        $enumType = $enumTypeClass::getType($enumTypeClass::getTypeName());
         $enumType->convertToPHPValue(tmpfile(), $this->getAbstractPlatform());
     }
 
     /**
+     * @param EnumType $enumType
+     *
      * @test
+     * @depends instance_can_be_obtained
      * @expectedException \Doctrineum\Strict\String\Exceptions\UnexpectedValueToEnum
      */
-    public function object_to_php_value_cause_exception()
+    public function object_to_php_value_cause_exception(EnumType $enumType)
     {
-        $enumTypeClass = $this->getEnumTypeClass();
-        $enumType = $enumTypeClass::getType($enumTypeClass::getTypeName());
         $enumType->convertToPHPValue(new \stdClass(), $this->getAbstractPlatform());
     }
 
     /**
+     * @param EnumType $enumType
+     *
      * @test
+     * @depends instance_can_be_obtained
      * @expectedException \Doctrineum\Strict\String\Exceptions\UnexpectedValueToEnum
      */
-    public function callback_to_php_value_cause_exception()
+    public function callback_to_php_value_cause_exception(EnumType $enumType)
     {
-        $enumTypeClass = $this->getEnumTypeClass();
-        $enumType = $enumTypeClass::getType($enumTypeClass::getTypeName());
         $enumType->convertToPHPValue(function () {
         }, $this->getAbstractPlatform());
     }
