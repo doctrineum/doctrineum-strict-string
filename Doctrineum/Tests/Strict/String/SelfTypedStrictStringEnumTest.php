@@ -23,17 +23,22 @@ class SelfTypedStrictStringEnumTest extends \PHPUnit_Framework_TestCase
 
     protected function getInheritedEnum($value)
     {
-        if (!Type::hasType(TestInheritedSelfTypedStrictStringEnum::getTypeName())) {
-            TestInheritedSelfTypedStrictStringEnum::registerSelf();
+        if (!Type::hasType(TestSubTypeSelfTypedStrictStringEnum::getTypeName())) {
+            TestSubTypeSelfTypedStrictStringEnum::registerSelf();
         }
-        $enum = TestInheritedSelfTypedStrictStringEnum::getEnum($value);
+        $enum = TestSubTypeSelfTypedStrictStringEnum::getEnum($value);
 
         return $enum;
+    }
+
+    protected function getTestSubTypeClass()
+    {
+        return TestSubTypeSelfTypedStrictStringEnum::class;
     }
 }
 
 /** inner */
-class TestInheritedSelfTypedStrictStringEnum extends SelfTypedStrictStringEnum
+class TestSubTypeSelfTypedStrictStringEnum extends SelfTypedStrictStringEnum
 {
 
 }
