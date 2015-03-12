@@ -23,22 +23,56 @@ class SelfTypedStrictStringEnumTest extends \PHPUnit_Framework_TestCase
 
     protected function getInheritedEnum($value)
     {
-        if (!Type::hasType(TestSubTypeSelfTypedStrictStringEnum::getTypeName())) {
-            TestSubTypeSelfTypedStrictStringEnum::registerSelf();
+        if (!Type::hasType(TestInheritedSelfTypedStrictStringEnum::getTypeName())) {
+            TestInheritedSelfTypedStrictStringEnum::registerSelf();
         }
-        $enum = TestSubTypeSelfTypedStrictStringEnum::getEnum($value);
+        $enum = TestInheritedSelfTypedStrictStringEnum::getEnum($value);
 
         return $enum;
     }
 
-    protected function getTestSubTypeClass()
+    /**
+     * @return string|TestAnotherSelfTypedStrictStringEnumType
+     */
+    protected function getAnotherEnumTypeClass()
+    {
+        return TestAnotherSelfTypedStrictStringEnumType::class;
+    }
+
+    /**
+     * @return string|TestSubTypeSelfTypedStrictStringEnum
+     */
+    protected function getSubTypeEnumClass()
     {
         return TestSubTypeSelfTypedStrictStringEnum::class;
+    }
+
+    /**
+     * @return string|TestAnotherSubTypeSelfTypedStrictStringEnum
+     */
+    protected function getAnotherSubTypeEnumClass()
+    {
+        return TestAnotherSubTypeSelfTypedStrictStringEnum::class;
     }
 }
 
 /** inner */
+class TestInheritedSelfTypedStrictStringEnum extends SelfTypedStrictStringEnum
+{
+
+}
+
 class TestSubTypeSelfTypedStrictStringEnum extends SelfTypedStrictStringEnum
+{
+
+}
+
+class TestAnotherSubTypeSelfTypedStrictStringEnum extends SelfTypedStrictStringEnum
+{
+
+}
+
+class TestAnotherSelfTypedStrictStringEnumType extends SelfTypedStrictStringEnum
 {
 
 }
