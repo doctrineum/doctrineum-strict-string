@@ -11,19 +11,19 @@ $stringEnum = StrictStringEnum::getEnum('foo bar');
 $stringEnum = StrictStringEnum::getEnum('12345');
 
 // throws an exception - only string is allowed
-$stringEnum = StrictStringEnum::get('');
+$stringEnum = StrictStringEnum::getEnum('');
 
 // throws an exception - only string is allowed
-StrictStringEnum::get(12);
+StrictStringEnum::getEnum(12);
 
 // throws an exception - only string is allowed
-StrictStringEnum::get(false);
+StrictStringEnum::getEnum(false);
 
 // throws an exception - only string is allowed
-StrictStringEnum::get(null);
+StrictStringEnum::getEnum(null);
 
 // throws an exception - only string is allowed
-StrictStringEnum::get(new ObjectWithToStringMethod('foo'));
+StrictStringEnum::getEnum(new ObjectWithToStringMethod('foo'));
 
 ```
 
