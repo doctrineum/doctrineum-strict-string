@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/jaroslavtyc/doctrineum-strict-string.svg)](https://travis-ci.org/jaroslavtyc/doctrineum-strict-string)
+
 # About
 [Doctrine](http://www.doctrine-project.org/) [enum](http://en.wikipedia.org/wiki/Enumerated_type) allowing strictly string only.
 
