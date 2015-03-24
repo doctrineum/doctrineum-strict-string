@@ -4,6 +4,9 @@ namespace Doctrineum\Strict\String;
 use Doctrineum\Scalar\Enum;
 use Doctrineum\Scalar\EnumInterface;
 
+/**
+ * @method static StrictStringEnum $enumValue(string)
+ */
 class StrictStringEnum extends Enum implements EnumInterface
 {
     /**
@@ -25,18 +28,6 @@ class StrictStringEnum extends Enum implements EnumInterface
                 'Expected string, got ' . gettype($value)
             );
         }
-    }
-
-    /**
-     * Using own namespace to avoid conflicts with other enums
-     *
-     * @param string $enumValue
-     * @param string $namespace
-     * @return StrictStringEnum
-     */
-    public static function getEnum($enumValue, $namespace = __CLASS__)
-    {
-        return parent::getEnum($enumValue, $namespace);
     }
 
     /**
