@@ -9,15 +9,15 @@
     "repositories": [
         {
             "type": "vcs",
-            "url": "/home/jaroslav/Dropbox/Projects/granam/strict-object"
+            "url": "https://github.com/jaroslavtyc/granam-strict-object"
         },
         {
             "type": "vcs",
-            "url": "/home/jaroslav/Dropbox/Projects/doctrineum/scalar"
+            "url": "https://github.com/jaroslavtyc/doctrineum-scalar"
         },
         {
             "type": "vcs",
-            "url": "/home/jaroslav/Dropbox/Projects/granam/exception-hierarchy"
+            "url": "https://github.com/jaroslavtyc/granam-exception-hierarchy"
         }
     ],
     "require": {
