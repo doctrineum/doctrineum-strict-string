@@ -1,28 +1,28 @@
 # About
-[Doctrine](http://www.doctrine-project.org/) [enum](http://en.wikipedia.org/wiki/Enumerated_type) allowing integers only.
+[Doctrine](http://www.doctrine-project.org/) [enum](http://en.wikipedia.org/wiki/Enumerated_type) allowing strictly string only.
 
 ### Example
 ```php
-$integerEnum = integerEnum::get(12345);
-(int)(string)$integerEnum === $integerEnum->getValue() === 12345; // true
 
-// correct, string with integer is allowed
-$integerEnum = integerEnum::get('12345');
+$stringEnum = StrictString::getEnum('foo bar');
 
-// correct - white charters are trimmed, the rest is pure integer
-$integerEnum = integerEnum::get('  12     ');
+$stringEnum = StrictString::getEnum('12345');
 
-// throws an exception - only integer number is allowed
-$integerEnum = integerEnum::get(12.3);
+// throws an exception - only string is allowed
+$stringEnum = integerEnum::get('');
 
-// throws an exception - only integer number is allowed
-$integerEnum = integerEnum::get('12foo');
+// throws an exception - only string is allowed
+integerEnum::get(12);
 
-// throws an exception - again only integer number is allowed
-$integerEnum = integerEnum::get(null)
+// throws an exception - only string is allowed
+integerEnum::get(false);
 
-// throws an exception - again only integer number is allowed
-$integerEnum = integerEnum::get('');
+// throws an exception - only string is allowed
+integerEnum::get(null);
+
+// throws an exception - only string is allowed
+integerEnum::get(new ObjectWithToStringMethod('foo'));
+
 ```
 
 # Doctrine integration
