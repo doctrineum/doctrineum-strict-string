@@ -31,11 +31,13 @@ trait StrictStringEnumTypeTestTrait
         \Mockery::close();
 
         $enumTypeClass = $this->getEnumTypeClass();
-        $enumType = Type::getType($enumTypeClass::getTypeName(), $enumTypeClass);
-        /** @var EnumType $enumType */
-        if ($enumType::hasSubTypeEnum($this->getSubTypeEnumClass())) {
-            /** @var \PHPUnit_Framework_TestCase|StrictStringEnumTypeTestTrait $this */
-            $this->assertTrue($enumType::removeSubTypeEnum($this->getSubTypeEnumClass()));
+        if (Type::hasType($enumTypeClass::getTypeName())) {
+            $enumType = Type::getType($enumTypeClass::getTypeName(), $enumTypeClass);
+            /** @var EnumType $enumType */
+            if ($enumType::hasSubTypeEnum($this->getSubTypeEnumClass())) {
+                /** @var \PHPUnit_Framework_TestCase|StrictStringEnumTypeTestTrait $this */
+                $this->assertTrue($enumType::removeSubTypeEnum($this->getSubTypeEnumClass()));
+            }
         }
     }
 
@@ -109,6 +111,7 @@ trait StrictStringEnumTypeTestTrait
 
     /**
      * @param string $className
+     *
      * @return string
      */
     private function convertToTypeName($className)
@@ -306,6 +309,7 @@ trait StrictStringEnumTypeTestTrait
 
     /**
      * @param EnumType $enumType
+     *
      * @return EnumType
      *
      * @test
