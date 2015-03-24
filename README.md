@@ -6,24 +6,24 @@
 ### Example
 ```php
 
-$stringEnum = StrictString::getEnum('foo bar');
+$stringEnum = StrictStringEnum::getEnum('foo bar');
 
-$stringEnum = StrictString::getEnum('12345');
-
-// throws an exception - only string is allowed
-$stringEnum = integerEnum::get('');
+$stringEnum = StrictStringEnum::getEnum('12345');
 
 // throws an exception - only string is allowed
-integerEnum::get(12);
+$stringEnum = StrictStringEnum::get('');
 
 // throws an exception - only string is allowed
-integerEnum::get(false);
+StrictStringEnum::get(12);
 
 // throws an exception - only string is allowed
-integerEnum::get(null);
+StrictStringEnum::get(false);
 
 // throws an exception - only string is allowed
-integerEnum::get(new ObjectWithToStringMethod('foo'));
+StrictStringEnum::get(null);
+
+// throws an exception - only string is allowed
+StrictStringEnum::get(new ObjectWithToStringMethod('foo'));
 
 ```
 
