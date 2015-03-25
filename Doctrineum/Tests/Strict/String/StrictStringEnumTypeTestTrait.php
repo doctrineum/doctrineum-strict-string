@@ -495,12 +495,12 @@ trait StrictStringEnumTypeTestTrait
         $value = 'some string fitting to searching pattern';
         $this->assertRegExp($regexp, $value);
 
-        $enumType = $enumTypeClass::getIt();
+        $enumType = Type::getType($enumTypeClass::getTypeName());
         $enumSubType = $enumType->convertToPHPValue($value, $this->getPlatform());
         $this->assertInstanceOf($this->getSubTypeEnumClass(), $enumSubType);
         $this->assertSame($value, "$enumSubType");
 
-        $anotherEnumType = $anotherEnumTypeClass::getIt();
+        $anotherEnumType = Type::getType($anotherEnumTypeClass::getTypeName());
         $anotherEnumSubType = $anotherEnumType->convertToPHPValue($value, $this->getPlatform());
         $this->assertInstanceOf($this->getSubTypeEnumClass(), $enumSubType);
         $this->assertSame($value, "$anotherEnumSubType");
