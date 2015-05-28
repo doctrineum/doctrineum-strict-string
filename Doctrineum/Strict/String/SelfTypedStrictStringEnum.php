@@ -61,12 +61,4 @@ class SelfTypedStrictStringEnum extends SelfTypedEnum
         return parent::convertToEnum($enumValue);
     }
 
-    /**
-     * @return string
-     */
-    public function __toString()
-    {
-        return $this->enumValue;
-    }
-
 }

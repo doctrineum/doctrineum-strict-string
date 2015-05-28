@@ -30,12 +30,4 @@ class StrictStringEnum extends Enum implements EnumInterface
         }
     }
 
-    /**
-     * @return string
-     */
-    public function __toString()
-    {
-        return $this->enumValue;
-    }
-
 }
