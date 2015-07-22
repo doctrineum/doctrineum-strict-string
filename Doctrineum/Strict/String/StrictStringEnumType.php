@@ -9,7 +9,7 @@ use Doctrineum\Scalar\EnumType;
  * @method static StrictStringEnumType getType($name),
  * @see EnumType::getType
  *
- * @method integer convertToDatabaseValue(\Doctrineum\Scalar\EnumInterface $enumValue, \Doctrine\DBAL\Platforms\AbstractPlatform $platform)
+ * @method int convertToDatabaseValue(\Doctrineum\Scalar\EnumInterface $enumValue, \Doctrine\DBAL\Platforms\AbstractPlatform $platform)
  * @see \Doctrineum\Scalar\EnumType::convertToDatabaseValue
  */
 class StrictStringEnumType extends EnumType
@@ -23,18 +23,22 @@ class StrictStringEnumType extends EnumType
     const STRICT_STRING_ENUM = 'strict_string_enum';
 
     /**
-     * @param string $enumValue
-     * @return StrictStringEnum
+     * @param $enumValue
+     *
+     * @return static
      */
     protected function convertToEnum($enumValue)
     {
-        if (!is_string($enumValue)) {
+        try {
+            return parent::convertToEnum($enumValue);
+        } catch (\Doctrineum\Scalar\Exceptions\UnexpectedValueToEnum $exception) {
+            // wrapping by a local one
             throw new Exceptions\UnexpectedValueToEnum(
-                'Unexpected value to convert. Expected string, got ' . gettype($enumValue)
+                $exception->getMessage(),
+                $exception->getCode(),
+                $exception
             );
         }
-
-        /** @var StrictStringEnum $enumClass */
-        return parent::convertToEnum($enumValue);
     }
+
 }

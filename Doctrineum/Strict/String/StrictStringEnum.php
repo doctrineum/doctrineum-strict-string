@@ -3,31 +3,21 @@ namespace Doctrineum\Strict\String;
 
 use Doctrineum\Scalar\Enum;
 use Doctrineum\Scalar\EnumInterface;
+use Granam\Scalar\Tools\ValueDescriber;
 
 /**
  * @method static StrictStringEnum $enumValue(string)
  */
 class StrictStringEnum extends Enum implements EnumInterface
 {
-    /**
-     * @param string $enumValue
-     */
-    public function __construct($enumValue)
-    {
-        $this->checkIfString($enumValue);
-        parent::__construct($enumValue);
-    }
 
-    /**
-     * @param mixed $value
-     */
-    protected function checkIfString($value)
+    protected static function convertToEnumFinalValue($value)
     {
         if (!is_string($value)) {
-            throw new Exceptions\UnexpectedValueToEnum(
-                'Expected string, got ' . gettype($value)
-            );
+            throw new Exceptions\UnexpectedValueToEnum('Expected string, got ' . ValueDescriber::describe($value));
         }
+
+        return $value;
     }
 
 }

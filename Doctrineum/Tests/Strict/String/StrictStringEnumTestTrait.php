@@ -1,13 +1,12 @@
 <?php
 namespace Doctrineum\Tests\Strict\String;
 
-use Doctrineum\Strict\String\SelfTypedStrictStringEnum;
 use Doctrineum\Strict\String\StrictStringEnum;
 
 trait StrictStringEnumTestTrait
 {
     /**
-     * @return \Doctrineum\Strict\String\StrictStringEnum|\Doctrineum\Strict\String\SelfTypedStrictStringEnum
+     * @return \Doctrineum\Strict\String\StrictStringEnum
      */
     protected function getEnumClass()
     {
@@ -90,7 +89,7 @@ trait StrictStringEnumTestTrait
 
     /**
      * @param $value
-     * @return StrictStringEnum|SelfTypedStrictStringEnum
+     * @return StrictStringEnum
      */
     abstract protected function getInheritedEnum($value);
 }
