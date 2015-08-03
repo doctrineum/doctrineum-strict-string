@@ -7,11 +7,12 @@ class StrictStringEnumTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      */
-    public function can_create_instance()
+    public function I_can_create_strict_string_enum()
     {
         $enumClass = $this->getEnumClass();
         $instance = $enumClass::getEnum('foo');
         $this->assertInstanceOf($enumClass, $instance);
+        $this->assertInstanceOf('Granam\Strict\String\StrictStringInterface', $instance);
     }
 
     /**
