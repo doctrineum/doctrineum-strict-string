@@ -2,13 +2,12 @@
 namespace Doctrineum\Strict\String;
 
 use Doctrineum\Scalar\Enum;
-use Doctrineum\Scalar\EnumInterface;
 use Granam\Scalar\Tools\ValueDescriber;
 
 /**
  * @method static StrictStringEnum $enumValue(string)
  */
-class StrictStringEnum extends Enum implements EnumInterface
+class StrictStringEnum extends Enum implements StrictStringEnumInterface
 {
 
     protected static function convertToEnumFinalValue($value)
@@ -18,6 +17,22 @@ class StrictStringEnum extends Enum implements EnumInterface
         }
 
         return $value;
+    }
+
+    /**
+     * @return string
+     */
+    public function getValue()
+    {
+        return $this->getEnumValue();
+    }
+
+    /**
+     * @return bool
+     */
+    public function isStrict()
+    {
+        return true;
     }
 
 }
