@@ -2,8 +2,8 @@
 namespace Doctrineum\Strict\String;
 
 use Doctrineum\Scalar\EnumInterface;
-use Granam\Strict\String\StrictStringInterface;
+use Granam\String\StringInterface;
 
-interface StrictStringEnumInterface extends StrictStringInterface, EnumInterface {
+interface StrictStringEnumInterface extends StringInterface, EnumInterface {
 
 }
