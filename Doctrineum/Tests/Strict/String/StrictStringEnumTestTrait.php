@@ -78,12 +78,12 @@ trait StrictStringEnumTestTrait
         $enum = $enumClass::getEnum($value = 'foo');
         /** @var \PHPUnit_Framework_TestCase|StrictStringEnumTestTrait $this */
         $this->assertInstanceOf($enumClass, $enum);
-        $this->assertSame($value, $enum->getEnumValue());
+        $this->assertSame($value, $enum->getValue());
         $this->assertSame($value, (string)$enum);
 
         $inDifferentNamespace = $this->getInheritedEnum($value);
         $this->assertInstanceOf($enumClass, $inDifferentNamespace);
-        $this->assertSame($enum->getEnumValue(), $inDifferentNamespace->getEnumValue());
+        $this->assertSame($enum->getValue(), $inDifferentNamespace->getValue());
         $this->assertNotSame($enum, $inDifferentNamespace);
     }
 

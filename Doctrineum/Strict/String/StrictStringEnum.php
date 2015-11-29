@@ -19,20 +19,4 @@ class StrictStringEnum extends Enum implements StrictStringEnumInterface
         return $value;
     }
 
-    /**
-     * @return string
-     */
-    public function getValue()
-    {
-        return $this->getEnumValue();
-    }
-
-    /**
-     * @return bool
-     */
-    public function isStrict()
-    {
-        return true;
-    }
-
 }
