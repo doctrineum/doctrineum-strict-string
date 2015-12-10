@@ -6,7 +6,6 @@ use Granam\Scalar\Tools\ValueDescriber;
 
 /**
  * @method static StrictStringEnum $enumValue(string)
- * @method string getValue()
  */
 class StrictStringEnum extends Enum implements StrictStringEnumInterface
 {
@@ -18,6 +17,14 @@ class StrictStringEnum extends Enum implements StrictStringEnumInterface
         }
 
         return $value;
+    }
+
+    /**
+     * @return string
+     */
+    public function getValue()
+    {
+        return $this->getEnumValue();
     }
 
 }

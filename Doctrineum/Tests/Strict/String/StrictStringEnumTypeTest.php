@@ -122,7 +122,7 @@ class StrictStringEnumTypeTest extends \PHPUnit_Framework_TestCase
     {
         $enum = \Mockery::mock(EnumInterface::class);
         /** @noinspection PhpMethodParametersCountMismatchInspection */
-        $enum->shouldReceive('getValue')
+        $enum->shouldReceive('getEnumValue')
             ->once()
             ->andReturn($value = 'foo');
         /** @var EnumInterface $enum */
@@ -137,6 +137,7 @@ class StrictStringEnumTypeTest extends \PHPUnit_Framework_TestCase
      */
     public function string_to_php_value_is_enum_with_that_string(EnumType $enumType)
     {
+        /** @var StrictStringEnum $enum */
         $enum = $enumType->convertToPHPValue($string = 'foo', $this->getAbstractPlatform());
         $this->assertInstanceOf(StrictStringEnum::getClass(), $enum);
         $this->assertSame($string, $enum->getValue());
@@ -150,6 +151,7 @@ class StrictStringEnumTypeTest extends \PHPUnit_Framework_TestCase
      */
     public function empty_string_to_php_value_is_enum_with_that_empty_string(EnumType $enumType)
     {
+        /** @var StrictStringEnum $enum */
         $enum = $enumType->convertToPHPValue($emptyString = '', $this->getAbstractPlatform());
         $this->assertInstanceOf(StrictStringEnum::getClass(), $enum);
         $this->assertSame($emptyString, $enum->getValue());
