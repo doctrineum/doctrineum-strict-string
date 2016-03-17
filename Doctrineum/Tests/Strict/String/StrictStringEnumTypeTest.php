@@ -17,7 +17,7 @@ class StrictStringEnumTypeTest extends \PHPUnit_Framework_TestCase
             $enumType = Type::getType($enumTypeClass::getTypeName());
             /** @var EnumType $enumType */
             if ($enumType::hasSubTypeEnum($this->getSubTypeEnumClass())) {
-                $this->assertTrue($enumType::removeSubTypeEnum($this->getSubTypeEnumClass()));
+                self::assertTrue($enumType::removeSubTypeEnum($this->getSubTypeEnumClass()));
             }
         }
     }
@@ -37,7 +37,7 @@ class StrictStringEnumTypeTest extends \PHPUnit_Framework_TestCase
         $enumTypeClass = $this->getEnumTypeClass();
         Type::addType($enumTypeClass::getTypeName(), $enumTypeClass);
         /** @var \PHPUnit_Framework_TestCase $this */
-        $this->assertTrue(Type::hasType($enumTypeClass::getTypeName()));
+        self::assertTrue(Type::hasType($enumTypeClass::getTypeName()));
     }
 
     /**
@@ -51,7 +51,7 @@ class StrictStringEnumTypeTest extends \PHPUnit_Framework_TestCase
         $enumTypeClass = $this->getEnumTypeClass();
         $instance = $enumTypeClass::getType($enumTypeClass::getTypeName());
         /** @var \PHPUnit_Framework_TestCase $this */
-        $this->assertInstanceOf($enumTypeClass, $instance);
+        self::assertInstanceOf($enumTypeClass, $instance);
 
         return $instance;
     }
@@ -66,7 +66,7 @@ class StrictStringEnumTypeTest extends \PHPUnit_Framework_TestCase
     {
         $sql = $enumType->getSQLDeclaration([], $this->getAbstractPlatform());
         /** @var \PHPUnit_Framework_TestCase $this */
-        $this->assertSame('VARCHAR(64)', $sql);
+        self::assertSame('VARCHAR(64)', $sql);
     }
 
     /**
@@ -90,10 +90,10 @@ class StrictStringEnumTypeTest extends \PHPUnit_Framework_TestCase
         $typeName = $this->convertToTypeName($enumTypeClass);
         // like STRICT_STRING_ENUM
         $constantName = strtoupper($typeName);
-        $this->assertTrue(defined("$enumTypeClass::$constantName"), "Enum type class should has defined constant $enumTypeClass::$constantName");
-        $this->assertSame($enumTypeClass::getTypeName(), $typeName);
-        $this->assertSame($typeName, constant("$enumTypeClass::$constantName"));
-        $this->assertSame($enumType::getTypeName(), $enumTypeClass::getTypeName());
+        self::assertTrue(defined("$enumTypeClass::$constantName"), "Enum type class should has defined constant $enumTypeClass::$constantName");
+        self::assertSame($enumTypeClass::getTypeName(), $typeName);
+        self::assertSame($typeName, constant("$enumTypeClass::$constantName"));
+        self::assertSame($enumType::getTypeName(), $enumTypeClass::getTypeName());
     }
 
     /**
@@ -126,7 +126,7 @@ class StrictStringEnumTypeTest extends \PHPUnit_Framework_TestCase
             ->once()
             ->andReturn($value = 'foo');
         /** @var EnumInterface $enum */
-        $this->assertSame($value, $enumType->convertToDatabaseValue($enum, $this->getAbstractPlatform()));
+        self::assertSame($value, $enumType->convertToDatabaseValue($enum, $this->getAbstractPlatform()));
     }
 
     /**
@@ -139,8 +139,8 @@ class StrictStringEnumTypeTest extends \PHPUnit_Framework_TestCase
     {
         /** @var StrictStringEnum $enum */
         $enum = $enumType->convertToPHPValue($string = 'foo', $this->getAbstractPlatform());
-        $this->assertInstanceOf(StrictStringEnum::getClass(), $enum);
-        $this->assertSame($string, $enum->getValue());
+        self::assertInstanceOf(StrictStringEnum::getClass(), $enum);
+        self::assertSame($string, $enum->getValue());
     }
 
     /**
@@ -153,8 +153,8 @@ class StrictStringEnumTypeTest extends \PHPUnit_Framework_TestCase
     {
         /** @var StrictStringEnum $enum */
         $enum = $enumType->convertToPHPValue($emptyString = '', $this->getAbstractPlatform());
-        $this->assertInstanceOf(StrictStringEnum::getClass(), $enum);
-        $this->assertSame($emptyString, $enum->getValue());
+        self::assertInstanceOf(StrictStringEnum::getClass(), $enum);
+        self::assertSame($emptyString, $enum->getValue());
     }
 
     /**
@@ -300,12 +300,12 @@ class StrictStringEnumTypeTest extends \PHPUnit_Framework_TestCase
     {
         $anotherEnumType = $this->getAnotherEnumTypeClass();
         if (!$anotherEnumType::isRegistered()) {
-            $this->assertTrue($anotherEnumType::registerSelf());
+            self::assertTrue($anotherEnumType::registerSelf());
         } else {
-            $this->assertFalse($anotherEnumType::registerSelf());
+            self::assertFalse($anotherEnumType::registerSelf());
         }
 
-        $this->assertTrue($anotherEnumType::isRegistered());
+        self::assertTrue($anotherEnumType::isRegistered());
     }
 
     /**

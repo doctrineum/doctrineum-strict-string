@@ -11,8 +11,8 @@ class StrictStringEnumTest extends \PHPUnit_Framework_TestCase
     {
         $enumClass = $this->getEnumClass();
         $instance = $enumClass::getEnum('foo');
-        $this->assertInstanceOf($enumClass, $instance);
-        $this->assertInstanceOf('Granam\String\StringInterface', $instance);
+        self::assertInstanceOf($enumClass, $instance);
+        self::assertInstanceOf('Granam\String\StringInterface', $instance);
     }
 
     /**
@@ -28,7 +28,7 @@ class StrictStringEnumTest extends \PHPUnit_Framework_TestCase
     {
         $enumClass = $this->getEnumClass();
         $enum = $enumClass::getEnum('foo');
-        $this->assertSame('foo', (string)$enum);
+        self::assertSame('foo', (string)$enum);
     }
 
     /**
@@ -74,14 +74,14 @@ class StrictStringEnumTest extends \PHPUnit_Framework_TestCase
         $enumClass = $this->getEnumClass();
 
         $enum = $enumClass::getEnum($value = 'foo');
-        $this->assertInstanceOf($enumClass, $enum);
-        $this->assertSame($value, $enum->getValue());
-        $this->assertSame($value, (string)$enum);
+        self::assertInstanceOf($enumClass, $enum);
+        self::assertSame($value, $enum->getValue());
+        self::assertSame($value, (string)$enum);
 
         $inDifferentNamespace = $this->getInheritedEnum($value);
-        $this->assertInstanceOf($enumClass, $inDifferentNamespace);
-        $this->assertSame($enum->getValue(), $inDifferentNamespace->getValue());
-        $this->assertNotSame($enum, $inDifferentNamespace);
+        self::assertInstanceOf($enumClass, $inDifferentNamespace);
+        self::assertSame($enum->getValue(), $inDifferentNamespace->getValue());
+        self::assertNotSame($enum, $inDifferentNamespace);
     }
 
     protected function getInheritedEnum($value)
